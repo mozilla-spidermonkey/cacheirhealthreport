@@ -1,0 +1,63 @@
+<!doctype HTML>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <title>CacheIR Health Report</title>
+      <meta name="" content="CacheIR Health Report">
+      <link rel="stylesheet" href="styles.css">
+   </head>
+   <body>
+      <h1>CacheIR Health Report</h1>
+      <form id="form">
+         <div>
+            <label for="file">CacheIR Report JSON File</label>
+            <input type=file id="file">
+            <div>
+               <button class="button" id="submit">Submit</button>
+            </div>
+         </div>
+      </form>
+      <div>
+         <button class="button" id="clear">Clear</button>
+      </div>
+      <br>
+      <div id="status"></div>
+      <br>
+      <h3 id="script-name"></h3>
+      <br>
+      <br>
+      <table class="selectable" id="op-table">
+         <thead>
+            <tr>
+               <th>Op</th>
+               <th>Health</th>
+               <th>Mode</th>
+               <th>Failure Count</th>
+            </tr>
+         </thead>
+         <tbody></tbody>
+      </table>
+      <table class="selectable" id="stub-table">
+         <thead>
+            <tr>
+               <th id="jsOp-id"></th>
+            </tr>
+            <tr>
+               <th>Health</th>
+               <th>Hit Count</th>
+            </tr>
+         </thead>
+         <tbody></tbody>
+      </table>
+      <table id="cacheIR-table">
+         <thead>
+            <tr>
+               <th>Op</th>
+               <th>Health</th>
+            </tr>
+         </thead>
+         <tbody></tbody>
+      </table>
+   </body>
+   <script src="report.js"></script>
+</html>
