@@ -128,6 +128,12 @@ function createOpTableRow(entry, opTbody, stubTable) {
   let cacheIRTbody = cacheIRTable.getElementsByTagName('tbody')[0];
 
   // Add JS_OP to table.
+  addCellValue(row, entry.lineno);
+
+  // Add line number to table.
+  addCellValue(row, entry.column);
+
+  // Add column number to table.
   addCellValue(row, entry.op);
 
   // Add health score to table if stubs exist.
