@@ -17,6 +17,7 @@ const JSOP_HEADER_ROWS = 1;
 const STUB_HEADER_ROWS = 2;
 
 var JSON_FILE;
+var isFiltered = false;
 
 var selectedJSOpRowNumber;
 var selectedStubRowNumber;
@@ -184,14 +185,20 @@ function createOpTableRow(entry, opTbody, stubTable, happinessFilter) {
   }
 }
 
-function cacheIREntries() {
+function createOpTable(happinessFilter) {
   let stubTable = document.getElementById("stub-table");
   let opTable = document.getElementById("op-table");
   opTable.style.display = "block";
 
   let opTbody = opTable.getElementsByTagName('tbody')[0];
   for (let entry of JSON_FILE.entries) {
-    createOpTableRow(entry, opTbody, stubTable, undefined);
+    createOpTableRow(entry, opTbody, stubTable, happinessFilter);
+  }
+
+  if (isFiltered && opTbody.innerHTML == "") {
+    let row = document.createElement("tr");
+    addCellValue(row, "No stubs have happiness level specified by filter.");
+    opTbody.appendChild(row);
   }
 }
 
@@ -205,7 +212,7 @@ function rateMyCacheIR(json) {
   document.getElementById("script-name").style.display = "inline";
   document.getElementById("happiness-filter").style.display = "block";
 
-  cacheIREntries();
+  createOpTable(undefined);
 }
 
 function handleJSON(event) {
@@ -237,15 +244,9 @@ document.getElementById("form").addEventListener("submit", function() {
 
 function filterOpTable(happinessFilter) {
   clearTables();
+  isFiltered = true;
 
-  let stubTable = document.getElementById("stub-table");
-  let opTable = document.getElementById("op-table");
-  opTable.style.display = "block";
-
-  let opTbody = opTable.getElementsByTagName('tbody')[0];
-  for (let entry of JSON_FILE.entries) {
-    createOpTableRow(entry, opTbody, stubTable, happinessFilter);
-  }
+  createOpTable(happinessFilter)
 }
 
 document.getElementById("sad").addEventListener("click", function() {
