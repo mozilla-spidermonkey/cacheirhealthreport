@@ -6,6 +6,7 @@ html {
 
 body {
   text-align: 20px;
+  font: 25px;
 }
 
 h1 {
@@ -22,20 +23,69 @@ h4 {
   display: none;
 }
 
-.button {
-  border-radius: 7px;
-  cursor: pointer;
-}
-
-#status {
-  color: #c9f0ff;
-}
-
 table {
   border-collapse: collapse;
   overflow-y: scroll;
   width: 50%;
   display: none;
+}
+
+th {
+  position: sticky;
+  top: 0;
+  background-color: #846075;
+}
+
+th,
+td {
+  border-bottom: 1px solid #c9f0ff;
+  padding: 10px 15px;
+}
+
+tfoot tr:last-child td {
+  border-bottom: 0;
+}
+
+.button {
+  padding: 14px;
+  cursor: pointer;
+  background-color: #90a0bb;
+  color: #faf8f8;
+  border: none;
+}
+
+.button:hover {
+  background-color: #7e8ca3;
+}
+
+.dropdown {
+  float: right;
+  display: none;
+  z-index: 1;
+}
+
+.dropdown a {
+  color: #faf8f8;
+  background-color: #354a50;
+  padding: 10px 20px;
+  display: block;
+}
+
+.dropdown a:hover {
+  background-color: #4b5e63;
+}
+
+.dropdown-display {
+  display: block;
+}
+
+#happiness-filter{
+  display: none;
+  float: right;
+}
+
+#status {
+  color: #c9f0ff;
 }
 
 .selectable tr:hover {
@@ -57,21 +107,5 @@ table {
   height: 285px;
   float: right;
   padding: 10px;
-}
-
-th {
-  position: sticky;
-  top: 0;
-  background-color: #846075;
-}
-
-th,
-td {
-  border-bottom: 1px solid #c9f0ff;
-  padding: 10px 15px;
-}
-
-tfoot tr:last-child td {
-  border-bottom: 0;
 }
 

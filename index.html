@@ -7,18 +7,27 @@
       <link rel="stylesheet" href="style.css">
    </head>
    <body>
-      <h1>CacheIR Health Report</h1>
+      <h1>CACHEIR HEALTH REPORT</h1>
       <form id="form">
          <div>
-            <label for="file">CacheIR Report JSON File</label>
+            <label for="file">JSON FILE</label>
             <input type=file id="file">
             <div>
-               <button class="button" id="submit">Submit</button>
+               <button class="button" id="submit">SUBMIT</button>
             </div>
          </div>
       </form>
       <div>
-         <button class="button" id="clear">Clear</button>
+         <button class="button" id="clear">CLEAR</button>
+      </div>
+      <div>
+         <button class="button" id="happiness-filter">HAPPINESS FILTER</button>
+         <div class="dropdown" id="happiness-options">
+            <a id="sad">🤬</a>
+            <a id="medium-sad">☹️</a>
+            <a id="medium-happy">😐</a>
+            <a id="happy">😀</a>
+         </div>
       </div>
       <br>
       <div id="status"></div>
@@ -29,12 +38,12 @@
       <table class="selectable" id="op-table">
          <thead>
             <tr>
-               <th>Op</th>
-               <th>Line</th>
-               <th>Column</th>
-               <th>Health</th>
-               <th>Mode</th>
-               <th>Failure Count</th>
+               <th>OP</th>
+               <th>LINE</th>
+               <th>COLUMN</th>
+               <th>HEALTH</th>
+               <th>MODE</th>
+               <th>FAILURE COUNT</th>
             </tr>
          </thead>
          <tbody></tbody>
@@ -45,8 +54,8 @@
                <th id="jsOp-id"></th>
             </tr>
             <tr>
-               <th>Health</th>
-               <th>Hit Count</th>
+               <th>HEALTH</th>
+               <th>HIT COUNT</th>
             </tr>
          </thead>
          <tbody></tbody>
@@ -54,8 +63,8 @@
       <table id="cacheIR-table">
          <thead>
             <tr>
-               <th>Op</th>
-               <th>Health</th>
+               <th>OP</th>
+               <th>HEALTH</th>
             </tr>
          </thead>
          <tbody></tbody>
@@ -63,3 +72,4 @@
    </body>
    <script src="report.js"></script>
 </html>
+

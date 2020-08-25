@@ -16,6 +16,8 @@ const HAPPINESS = [
 const JSOP_HEADER_ROWS = 1;
 const STUB_HEADER_ROWS = 2;
 
+var JSON_FILE;
+
 var selectedJSOpRowNumber;
 var selectedStubRowNumber;
 
@@ -47,8 +49,8 @@ function addCellValue(row, value) {
 
 // TODO: Refine happiness calculations to take in account 
 // all factors of CacheIR.
-function calculateHappinessLevel(stub) {
-  if (stub.stubHealth > 20) {
+function stubHappinessLevel(stub) {
+  if (stub.mode > 0 || stub.stubHealth > 20) {
     return 3;
   } else if (stub.stubHealth < 20 && stub.stubHealth > 15) {
     return 2;
@@ -59,16 +61,16 @@ function calculateHappinessLevel(stub) {
   }
 }
 
-function addHealthScore(row, stubs) {
+function calculateHealthScore(stubs) {
   let health = 0;
   for (let stub of stubs) {
-    let comparison = calculateHappinessLevel(stub);
+    let comparison = stubHappinessLevel(stub);
     if (comparison > health) {
       health = comparison;
     }
   }
 
-  addCellValue(row, HAPPINESS[health]);
+  return health;
 }
 
 // Create table for displaying CacheIROps contained in selected stub.
@@ -120,85 +122,90 @@ function createStubChainInspectorTable(cacheIRTable, cacheIRTbody, stubTbody, en
 }
 
 // Create table for displaying JS_OPs and their associated information.
-function createOpTableRow(entry, opTbody, stubTable) {
-  let row = document.createElement("tr");
-  let stubTbody = stubTable.getElementsByTagName('tbody')[0];
+function createOpTableRow(entry, opTbody, stubTable, happinessFilter) {
+  let health = calculateHealthScore(entry.stubs);
 
-  let cacheIRTable = document.getElementById("cacheIR-table");
-  let cacheIRTbody = cacheIRTable.getElementsByTagName('tbody')[0];
+  if (happinessFilter == undefined || happinessFilter == health) {
+    let row = document.createElement("tr");
+    let stubTbody = stubTable.getElementsByTagName('tbody')[0];
 
-  // Add JS_OP to table.
-  addCellValue(row, entry.op);
+    let cacheIRTable = document.getElementById("cacheIR-table");
+    let cacheIRTbody = cacheIRTable.getElementsByTagName('tbody')[0];
 
-  // Add line number to table.
-  addCellValue(row, entry.lineno);
 
-  // Add column number to table.
-  addCellValue(row, entry.column);
+    // Add JS_OP to table.
+    addCellValue(row, entry.op);
 
-  // Add health score to table if stubs exist.
-  if (entry.hasOwnProperty('stubs')) {
-    addHealthScore(row, entry.stubs);
+    // Add line number to table.
+    addCellValue(row, entry.lineno);
 
-    // If stubs exist then add stub table for that row.
-    row.onclick = function() {
-      // Highlight selected JS_OP row.
-      highlightSelectedJSOp(opTbody, row);
+    // Add column number to table.
+    addCellValue(row, entry.column);
 
-      if (stubTable.style.display === "") {
-        stubTable.style.display = "block";
-      } else {
-        //  Reset selected row number for stub table.
-        selectedStubRowNumber = undefined;
-        stubTbody.innerHTML = "";
+    // Add health score to table if stubs exist.
+    if (entry.hasOwnProperty('stubs')) {
+      addCellValue(row, HAPPINESS[health]);
 
-        // Clear out CacheIR table for new stub table.
-        cacheIRTable.style.display = "";
-        cacheIRTbody.innerHTML = "";
-      }
+      // If stubs exist then add stub table for that row.
+      row.onclick = function() {
+        // Highlight selected JS_OP row.
+        highlightSelectedJSOp(opTbody, row);
 
-      let jsOp = document.getElementById("jsOp-id");
-      jsOp.textContent = entry.op;
+        if (stubTable.style.display === "") {
+          stubTable.style.display = "block";
+        } else {
+          //  Reset selected row number for stub table.
+          selectedStubRowNumber = undefined;
+          stubTbody.innerHTML = "";
 
-      createStubChainInspectorTable(cacheIRTable, cacheIRTbody, stubTbody, entry);
-    };
+          // Clear out CacheIR table for new stub table.
+          cacheIRTable.style.display = "";
+          cacheIRTbody.innerHTML = "";
+        }
+
+        let jsOp = document.getElementById("jsOp-id");
+        jsOp.textContent = entry.op;
+
+        createStubChainInspectorTable(cacheIRTable, cacheIRTbody, stubTbody, entry);
+      };
+    }
+
+    // Add mode to table if mode was recorded.
+    if (entry.hasOwnProperty('mode')) {
+      addCellValue(row, MODE[entry.mode]);
+    }
+
+    // Add fallback count to table if it exists.
+    if (entry.hasOwnProperty('fallbackCount')) {
+      addCellValue(row, entry.fallbackCount);
+    }
+
+    opTbody.appendChild(row);
   }
-
-  // Add mode to table if mode was recorded.
-  if (entry.hasOwnProperty('mode')) {
-    addCellValue(row, MODE[entry.mode]);
-  }
-
-  // Add fallback count to table if it exists.
-  if (entry.hasOwnProperty('fallbackCount')) {
-    addCellValue(row, entry.fallbackCount);
-  }
-
-  opTbody.appendChild(row);
 }
 
-function cacheIREntries(script) {
+function cacheIREntries() {
   let stubTable = document.getElementById("stub-table");
   let opTable = document.getElementById("op-table");
   opTable.style.display = "block";
 
-  let entries = script.entries;
   let opTbody = opTable.getElementsByTagName('tbody')[0];
-  for (let entry of entries) {
-    createOpTableRow(entry, opTbody, stubTable);
+  for (let entry of JSON_FILE.entries) {
+    createOpTableRow(entry, opTbody, stubTable, undefined);
   }
 }
 
 function rateMyCacheIR(json) {
-  let script = json[0];
-  if (script.channel != "RateMyCacheIR") {
+  JSON_FILE = json[0];
+  if (JSON_FILE.channel != "RateMyCacheIR") {
     document.getElementById("status").textContent = "Wrong JSON spew channel."
   }
 
-  document.getElementById("script-name").textContent = script.location.filename;
+  document.getElementById("script-name").textContent = JSON_FILE.location.filename;
   document.getElementById("script-name").style.display = "inline";
+  document.getElementById("happiness-filter").style.display = "block";
 
-  cacheIREntries(script);
+  cacheIREntries();
 }
 
 function handleJSON(event) {
@@ -228,11 +235,44 @@ document.getElementById("form").addEventListener("submit", function() {
   handleJSON(event);
 });
 
-function clear() {
-  document.getElementById("form").reset();
+function filterOpTable(happinessFilter) {
+  clearTables();
+
+  let stubTable = document.getElementById("stub-table");
+  let opTable = document.getElementById("op-table");
+  opTable.style.display = "block";
+
+  let opTbody = opTable.getElementsByTagName('tbody')[0];
+  for (let entry of JSON_FILE.entries) {
+    createOpTableRow(entry, opTbody, stubTable, happinessFilter);
+  }
+}
+
+document.getElementById("sad").addEventListener("click", function() {
+  filterOpTable(3);
+});
+
+document.getElementById("medium-sad").addEventListener("click", function() {
+  filterOpTable(2);
+});
+
+document.getElementById("medium-happy").addEventListener("click", function() {
+  filterOpTable(1);
+});
+
+document.getElementById("happy").addEventListener("click", function() {
+  filterOpTable(0);
+});
+
+document.getElementById("happiness-filter").addEventListener("click", function() {
+  document.getElementById("happiness-options").classList.toggle("dropdown-display");
+});
+
+function clearTables() {
   let opTable = document.getElementById("op-table");
   let stubTable = document.getElementById("stub-table");
   let cacheIROpTable = document.getElementById("cacheIR-table");
+  document.getElementById("happiness-options").classList.remove("dropdown-display");
 
   opTable.getElementsByTagName('tbody')[0].innerHTML = "";
   opTable.style.display = "";
@@ -245,11 +285,14 @@ function clear() {
 
   selectedJSOpRowNumber = undefined;
   selectedStubRowNumber = undefined;
-
-  document.getElementById("script-name").textContent = "";
-  document.getElementById("status").textContent = "Cleared.";
 }
 
 document.getElementById("clear").addEventListener("click", function() {
-  clear();
+  document.getElementById("form").reset();
+  document.getElementById("script-name").textContent = "";
+  document.getElementById("happiness-filter").style.display = "";
+
+  clearTables();
+
+  document.getElementById("status").textContent = "Cleared.";
 });
