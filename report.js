@@ -13,14 +13,26 @@ const HAPPINESS = [
   "🤬"
 ];
 
+const SCRIPT_HEADER_ROWS = 1;
 const JSOP_HEADER_ROWS = 1;
 const STUB_HEADER_ROWS = 2;
 
 var JSON_FILE;
 var isFiltered = false;
 
+var selectedScriptRowNumber;
 var selectedJSOpRowNumber;
 var selectedStubRowNumber;
+
+function highlightSelectedScript(tbody, row) {
+  if (typeof selectedScriptRowNumber !== 'undefined') {
+    // Change previously selected row to original color.
+    tbody.rows[selectedScriptRowNumber].style.backgroundColor = "";
+  }
+
+  row.style.backgroundColor = "#03635d";
+  selectedScriptRowNumber = row.rowIndex - SCRIPT_HEADER_ROWS;
+}
 
 function highlightSelectedStub(tbody, row) {
   if (typeof selectedStubRowNumber !== 'undefined') {
@@ -48,32 +60,6 @@ function addCellValue(row, value) {
   cell.appendChild(text);
 }
 
-// TODO: Refine happiness calculations to take in account 
-// all factors of CacheIR.
-function stubHappinessLevel(stub) {
-  if (stub.mode > 0 || stub.stubHealth > 20) {
-    return 3;
-  } else if (stub.stubHealth < 20 && stub.stubHealth > 15) {
-    return 2;
-  } else if (stub.stubHealth < 15 && stub.stubHealth > 10) {
-    return 1;
-  } else {
-    return 0;
-  }
-}
-
-function calculateHealthScore(stubs) {
-  let health = 0;
-  for (let stub of stubs) {
-    let comparison = stubHappinessLevel(stub);
-    if (comparison > health) {
-      health = comparison;
-    }
-  }
-
-  return health;
-}
-
 // Create table for displaying CacheIROps contained in selected stub.
 function createCacheIRTable(cacheIRTbody, stub) {
   if (stub.cacheIROps.length) {
@@ -91,7 +77,7 @@ function createCacheIRTable(cacheIRTbody, stub) {
 }
 
 // Create table for displaying stub chain for the selected JS_OP.
-function createStubChainInspectorTable(cacheIRTable, cacheIRTbody, stubTbody, entry) {
+function createStubTable(cacheIRTable, cacheIRTbody, stubTbody, entry) {
   if (entry.stubs.length) {
     for (let stub of entry.stubs) {
       let row = document.createElement("tr");
@@ -104,9 +90,9 @@ function createStubChainInspectorTable(cacheIRTable, cacheIRTbody, stubTbody, en
         highlightSelectedStub(stubTbody, row);
 
         if (cacheIRTable.style.display === "") {
-          cacheIRTable.style.display = "block";
+          cacheIRTable.style.display = "inline-block";
         } else {
-          cacheIRTbody.innerHTML = "";
+          clearCacheIRTable("inline-block");
         }
 
         createCacheIRTable(cacheIRTbody, stub);
@@ -123,16 +109,13 @@ function createStubChainInspectorTable(cacheIRTable, cacheIRTbody, stubTbody, en
 }
 
 // Create table for displaying JS_OPs and their associated information.
-function createOpTableRow(entry, opTbody, stubTable, happinessFilter) {
-  let health = calculateHealthScore(entry.stubs);
+function createOpTableRow(entry, opTbody, happinessFilter) {
+  let health = entry.entryHappiness;
 
   if (happinessFilter == undefined || happinessFilter == health) {
-    let row = document.createElement("tr");
+    let stubTable = document.getElementById("stub-table");
     let stubTbody = stubTable.getElementsByTagName('tbody')[0];
-
-    let cacheIRTable = document.getElementById("cacheIR-table");
-    let cacheIRTbody = cacheIRTable.getElementsByTagName('tbody')[0];
-
+    let row = document.createElement("tr");
 
     // Add JS_OP to table.
     addCellValue(row, entry.op);
@@ -145,6 +128,9 @@ function createOpTableRow(entry, opTbody, stubTable, happinessFilter) {
 
     // Add health score to table if stubs exist.
     if (entry.hasOwnProperty('stubs')) {
+      let cacheIRTable = document.getElementById("cacheIR-table");
+      let cacheIRTbody = cacheIRTable.getElementsByTagName('tbody')[0];
+
       addCellValue(row, HAPPINESS[health]);
 
       // If stubs exist then add stub table for that row.
@@ -155,19 +141,17 @@ function createOpTableRow(entry, opTbody, stubTable, happinessFilter) {
         if (stubTable.style.display === "") {
           stubTable.style.display = "block";
         } else {
-          //  Reset selected row number for stub table.
-          selectedStubRowNumber = undefined;
-          stubTbody.innerHTML = "";
-
-          // Clear out CacheIR table for new stub table.
-          cacheIRTable.style.display = "";
-          cacheIRTbody.innerHTML = "";
+          // When selecting a new JS_Op we must clear all previously 
+          // created tables.
+          clearStubTable("block");
+          clearCacheIRTable("");
         }
 
+        // For the display of the selected JS_Op.
         let jsOp = document.getElementById("jsOp-id");
         jsOp.textContent = entry.op;
 
-        createStubChainInspectorTable(cacheIRTable, cacheIRTbody, stubTbody, entry);
+        createStubTable(cacheIRTable, cacheIRTbody, stubTbody, entry);
       };
     }
 
@@ -185,14 +169,11 @@ function createOpTableRow(entry, opTbody, stubTable, happinessFilter) {
   }
 }
 
-function createOpTable(happinessFilter) {
-  let stubTable = document.getElementById("stub-table");
-  let opTable = document.getElementById("op-table");
-  opTable.style.display = "block";
+function createOpTable(entries, opTable, opTbody, happinessFilter) {
+  opTable.style.display = "inline-block";
 
-  let opTbody = opTable.getElementsByTagName('tbody')[0];
-  for (let entry of JSON_FILE.entries) {
-    createOpTableRow(entry, opTbody, stubTable, happinessFilter);
+  for (let entry of entries) {
+    createOpTableRow(entry, opTbody, happinessFilter);
   }
 
   if (isFiltered && opTbody.innerHTML == "") {
@@ -202,17 +183,74 @@ function createOpTable(happinessFilter) {
   }
 }
 
+// Create table for displaying scripts and their associated information.
+function createScriptTableRow(script, scriptTbody, happinessFilter) {
+  let health = script.scriptHappiness;
+  if (happinessFilter == undefined || happinessFilter == health) {
+    let row = document.createElement("tr");
+
+    // Add script name to table.
+    addCellValue(row, script.filename);
+
+    // Add line number to table.
+    addCellValue(row, script.line);
+
+    // Add column number to table.
+    addCellValue(row, script.column);
+
+    // Add health score for the script.
+    addCellValue(row, HAPPINESS[health]);
+
+    row.onclick = function() {
+      let opTable = document.getElementById("op-table");
+      let opTbody = opTable.getElementsByTagName('tbody')[0];
+
+      // Highlight selected script row.
+      highlightSelectedScript(scriptTbody, row);
+
+      if (opTable.style.display === "") {
+        opTable.style.display = "inline-block";
+      } else {
+        // When selecting a new script we must clear all previously 
+        // created tables.
+        clearOpTable("inline-block");
+        clearStubTable("");
+        clearCacheIRTable("");
+      }
+
+      createOpTable(script.entries, opTable, opTbody, happinessFilter);
+    };
+
+
+    scriptTbody.appendChild(row);
+  }
+}
+
+function createScriptTable(happinessFilter) {
+  let scriptTable = document.getElementById("script-table");
+  scriptTable.style.display = "block";
+
+  let scriptTbody = scriptTable.getElementsByTagName('tbody')[0];
+  for (let script of JSON_FILE.scripts) {
+    createScriptTableRow(script, scriptTbody, happinessFilter);
+  }
+
+  if (isFiltered && scriptTbody.innerHTML == "") {
+    let row = document.createElement("tr");
+    addCellValue(row, "No scripts have happiness level specified by filter.");
+    scriptTbody.appendChild(row);
+  }
+}
+
 function rateMyCacheIR(json) {
   JSON_FILE = json[0];
   if (JSON_FILE.channel != "RateMyCacheIR") {
     document.getElementById("status").textContent = "Wrong JSON spew channel."
   }
 
-  document.getElementById("script-name").textContent = JSON_FILE.location.filename;
-  document.getElementById("script-name").style.display = "inline";
-  document.getElementById("happiness-filter").style.display = "block";
+  document.getElementById("happiness-filter").style.display = "inline-block";
 
-  createOpTable(undefined);
+  createScriptTable(undefined);
 }
 
 function handleJSON(event) {
@@ -243,11 +281,16 @@ document.getElementById("form").addEventListener("submit", function() {
 });
 
 function filterOpTable(happinessFilter) {
-  clearTables();
-  isFiltered = true;
+  clearAllTables();
+  createScriptTable(happinessFilter);
 
-  createOpTable(happinessFilter)
+  isFiltered = true;
 }
+
+document.getElementById("clear-filter").addEventListener("click", function() {
+  clearAllTables();
+  createScriptTable(undefined);
+});
 
 document.getElementById("sad").addEventListener("click", function() {
   filterOpTable(3);
@@ -269,31 +312,47 @@ document.getElementById("happiness-filter").addEventListener("click", function()
   document.getElementById("happiness-options").classList.toggle("dropdown-display");
 });
 
-function clearTables() {
+function clearScriptTable(displayString) {
+  let scriptTable = document.getElementById("script-table");
+  scriptTable.getElementsByTagName('tbody')[0].innerHTML = "";
+  scriptTable.style.display = displayString;
+  selectedScriptRowNumber = undefined;
+}
+
+function clearOpTable(displayString) {
   let opTable = document.getElementById("op-table");
-  let stubTable = document.getElementById("stub-table");
-  let cacheIROpTable = document.getElementById("cacheIR-table");
-  document.getElementById("happiness-options").classList.remove("dropdown-display");
-
   opTable.getElementsByTagName('tbody')[0].innerHTML = "";
-  opTable.style.display = "";
-
-  stubTable.getElementsByTagName('tbody')[0].innerHTML = "";
-  stubTable.style.display = "";
-
-  cacheIROpTable.getElementsByTagName('tbody')[0].innerHTML = "";
-  cacheIROpTable.style.display = "";
-
+  opTable.style.display = displayString;
   selectedJSOpRowNumber = undefined;
+}
+
+function clearStubTable(displayString) {
+  let stubTable = document.getElementById("stub-table");
+  stubTable.getElementsByTagName('tbody')[0].innerHTML = "";
+  stubTable.style.display = displayString;
   selectedStubRowNumber = undefined;
+}
+
+function clearCacheIRTable(displayString) {
+  let cacheIROpTable = document.getElementById("cacheIR-table");
+  cacheIROpTable.getElementsByTagName('tbody')[0].innerHTML = "";
+  cacheIROpTable.style.display = displayString;
+}
+
+function clearAllTables() {
+  document.getElementById("happiness-options").classList.remove("dropdown-display");
+  
+  clearScriptTable("");
+  clearOpTable("");
+  clearStubTable("");
+  clearCacheIRTable("");
 }
 
 document.getElementById("clear").addEventListener("click", function() {
   document.getElementById("form").reset();
-  document.getElementById("script-name").textContent = "";
   document.getElementById("happiness-filter").style.display = "";
 
-  clearTables();
+  clearAllTables();
 
   document.getElementById("status").textContent = "Cleared.";
 });

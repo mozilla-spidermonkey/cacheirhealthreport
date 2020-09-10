@@ -26,8 +26,8 @@ h4 {
 table {
   border-collapse: collapse;
   overflow-y: scroll;
-  width: 50%;
   display: none;
+  height: 307px;
 }
 
 th {
@@ -39,7 +39,7 @@ th {
 th,
 td {
   border-bottom: 1px solid #c9f0ff;
-  padding: 10px 15px;
+  padding: 10px;
 }
 
 tfoot tr:last-child td {
@@ -68,7 +68,7 @@ tfoot tr:last-child td {
   color: #faf8f8;
   background-color: #354a50;
   padding: 10px 20px;
-  display: block;
+  display: inline-block;
 }
 
 .dropdown a:hover {
@@ -92,20 +92,20 @@ tfoot tr:last-child td {
   background-color: #05948b;
 }
 
-#op-table {
-  height: 515px;
+#script-table {
   float: left;
 }
 
-#stub-table {
-  height: 205px;
+#op-table {
   float: right;
-  padding: 10px;
+}
+
+#stub-table {
+  float: left;
+  height: 215px;
 }
 
 #cacheIR-table {
-  height: 285px;
   float: right;
-  padding: 10px;
 }
 
