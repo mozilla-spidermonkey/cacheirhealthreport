@@ -7,10 +7,10 @@ const MODE = [
 ];
 
 const HAPPINESS = [
-  "😀",
-  "😐",
+  "🤬",
   "☹️",
-  "🤬"
+  "😐",
+  "😀" 
 ];
 
 const SCRIPT_HEADER_ROWS = 1;
@@ -139,11 +139,11 @@ function createOpTableRow(entry, opTbody, happinessFilter) {
         highlightSelectedJSOp(opTbody, row);
 
         if (stubTable.style.display === "") {
-          stubTable.style.display = "block";
+          stubTable.style.display = "inline-block";
         } else {
           // When selecting a new JS_Op we must clear all previously 
           // created tables.
-          clearStubTable("block");
+          clearStubTable("inline-block");
           clearCacheIRTable("");
         }
 
@@ -228,7 +228,7 @@ function createScriptTableRow(script, scriptTbody, happinessFilter) {
 
 function createScriptTable(happinessFilter) {
   let scriptTable = document.getElementById("script-table");
-  scriptTable.style.display = "block";
+  scriptTable.style.display = "inline-block";
 
   let scriptTbody = scriptTable.getElementsByTagName('tbody')[0];
   for (let script of JSON_FILE.scripts) {
@@ -293,19 +293,19 @@ document.getElementById("clear-filter").addEventListener("click", function() {
 });
 
 document.getElementById("sad").addEventListener("click", function() {
-  filterOpTable(3);
+  filterOpTable(0);
 });
 
 document.getElementById("medium-sad").addEventListener("click", function() {
-  filterOpTable(2);
-});
-
-document.getElementById("medium-happy").addEventListener("click", function() {
   filterOpTable(1);
 });
 
+document.getElementById("medium-happy").addEventListener("click", function() {
+  filterOpTable(2);
+});
+
 document.getElementById("happy").addEventListener("click", function() {
-  filterOpTable(0);
+  filterOpTable(3);
 });
 
 document.getElementById("happiness-filter").addEventListener("click", function() {

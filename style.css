@@ -27,7 +27,8 @@ table {
   border-collapse: collapse;
   overflow-y: scroll;
   display: none;
-  height: 307px;
+  height: 512px;
+  float: left;
 }
 
 th {
@@ -91,21 +92,3 @@ tfoot tr:last-child td {
 .selectable tr:hover {
   background-color: #05948b;
 }
-
-#script-table {
-  float: left;
-}
-
-#op-table {
-  float: right;
-}
-
-#stub-table {
-  float: left;
-  height: 215px;
-}
-
-#cacheIR-table {
-  float: right;
-}
-
