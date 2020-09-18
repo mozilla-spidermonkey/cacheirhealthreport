@@ -13,6 +13,11 @@ h1 {
   text-align: center;
 }
 
+h1:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 h3 {
   margin: 20px;
   display: none;
