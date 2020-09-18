@@ -17,7 +17,7 @@ const SCRIPT_HEADER_ROWS = 1;
 const JSOP_HEADER_ROWS = 1;
 const STUB_HEADER_ROWS = 2;
 
-var JSON_FILE;
+var PARSED_JSON;
 var isFiltered = false;
 
 var selectedScriptRowNumber;
@@ -190,13 +190,13 @@ function createScriptTableRow(script, scriptTbody, happinessFilter) {
     let row = document.createElement("tr");
 
     // Add script name to table.
-    addCellValue(row, script.filename);
+    addCellValue(row, script.location.filename);
 
     // Add line number to table.
-    addCellValue(row, script.line);
+    addCellValue(row, script.location.line);
 
     // Add column number to table.
-    addCellValue(row, script.column);
+    addCellValue(row, script.location.column);
 
     // Add health score for the script.
     addCellValue(row, HAPPINESS[health]);
@@ -228,48 +228,42 @@ function createScriptTableRow(script, scriptTbody, happinessFilter) {
 
 function createScriptTable(happinessFilter) {
   let scriptTable = document.getElementById("script-table");
-  scriptTable.style.display = "inline-block";
-
   let scriptTbody = scriptTable.getElementsByTagName('tbody')[0];
-  for (let script of JSON_FILE.scripts) {
-    createScriptTableRow(script, scriptTbody, happinessFilter);
-  }
-
-  if (isFiltered && scriptTbody.innerHTML == "") {
-    let row = document.createElement("tr");
-    addCellValue(row, "No scripts have happiness level specified by filter.");
-    scriptTbody.appendChild(row);
-  }
-}
-
-function rateMyCacheIR(json) {
-  JSON_FILE = json[0];
-  if (JSON_FILE.channel != "RateMyCacheIR") {
-    document.getElementById("status").textContent = "Wrong JSON spew channel."
-  }
-
+  scriptTable.style.display = "inline-block";
   document.getElementById("happiness-filter").style.display = "inline-block";
 
-  createScriptTable(undefined);
+  for (let script of PARSED_JSON) {
+    if (script.channel != "RateMyCacheIR") {
+      document.getElementById("status").textContent = "Wrong JSON spew channel."
+    }
+
+    createScriptTableRow(script, scriptTbody, happinessFilter);
+
+    if (isFiltered && scriptTbody.innerHTML == "") {
+      let row = document.createElement("tr");
+      addCellValue(row, "No scripts have happiness level specified by filter.");
+      scriptTbody.appendChild(row);
+    }
+  }
 }
 
 function handleJSON(event) {
   const reader = new FileReader();
   const file = document.getElementById("file").files[0];
-  let json;
 
   reader.onload = function(event) {
     const status = document.getElementById("status");
 
     try {
-      json = JSON.parse(event.target.result);
+      PARSED_JSON = JSON.parse(event.target.result);
       status.textContent = "Successfully parsed JSON.";
     } catch (e) {
       status.textContent = "Error parsing JSON file.";
       status.style.color = "red";
+      return;
     }
 
-    rateMyCacheIR(json);
+    createScriptTable(undefined);
   };
 
   reader.readAsText(file);
@@ -351,6 +345,7 @@ function clearAllTables() {
 document.getElementById("clear").addEventListener("click", function() {
   document.getElementById("form").reset();
   document.getElementById("happiness-filter").style.display = "";
+  document.getElementById("status").style.color = "#c9f0ff";
 
   clearAllTables();
 
