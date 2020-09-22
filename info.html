@@ -1,0 +1,45 @@
+<!doctype HTML>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <title>CacheIR Health Report</title>
+      <meta name="" content="CacheIR Health Report Help and Information">
+      <link rel="stylesheet" href="styles-help.css">
+   </head>
+   <body>
+      <h1>
+      <div class="website-title">
+         <a  href="index.html">CACHEIR HEALTH REPORT</a>
+      </div>
+      </h1>
+      <br>
+      <h2>
+         INFORMATION AND HELP PAGE FOR CACHEIR HEALTH REPORT TOOL
+      </h2>
+      <h3>
+      HOW TO GENERATE AND USE A HEALTH REPORT:
+      </h3>
+      <h4>
+      1. <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey/Build_Documentation"> Build SpiderMonkey's JavaScript shell</a>.<br>
+      2. Use environment variable: SPEW=RateMyCacheIR.<br>
+      3. There are three ways to generate a CacheIR Health Report:<br>
+      </h4>
+      <h5> 
+      - Simply running a test case using --warp will produce a health report.<br>
+      - In the shell you can call rateMyCacheIR() and a report will be generated for all scripts in the current zone.<br>
+      - You may also call rateMyCacheIR() on a particular function to see the health report associated with that function's script. (ex. rateMyCacheIR(foo))
+      </h5>
+      <h4>
+      4. The health report will be named "spew_output.[PID].0", unless otherwise specified, and will be in the same directory you ran the shell in.<br>
+      5. Go to <a href="https://carolinecullen.github.io/cacheirhealthreport/">CacheIR Health Report</a> and input the file from the previous step into the tool.<br>
+      </h4>
+      <h3>
+      RESOURCES:
+      </h3>
+      <h4>
+      <a href="https://searchfox.org/mozilla-central/source/js/src/jit/CacheIRHealth.h#21-37">Motivation and Description of CacheIR Health Report</a><br>
+      <a href="https://searchfox.org/mozilla-central/source/js/src/jit/CacheIROps.yaml#26-49">How we decide scoring for particular CacheIROps</a><br>
+      <a href="https://searchfox.org/mozilla-central/source/js/src/util/StructuredSpewer.h#42-63">How to specify a different spew file for the health report</a><br>
+      </h4>
+   </body>
+</html>
