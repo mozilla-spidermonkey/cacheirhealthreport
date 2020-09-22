@@ -23,11 +23,11 @@
          <li>There are three ways to generate a CacheIR Health Report:</li>
          <ul> 
             <li>Simply running a JS program using --warp will produce a health report.</li>
-            <div class="example"> ex) SPEW=RateMyCacheIR dist/bin/js --warp jsprogram.js</div>
+            <div class="example"><code>SPEW=RateMyCacheIR dist/bin/js --warp jsprogram.js</code></div>
             <li>In the shell you can call rateMyCacheIR() and a report will be generated for all scripts in the current zone.</li>
-            <div class="example"> ex) rateMyCacheIR()</div>
+            <div class="example"><code>rateMyCacheIR()</code></div>
             <li>You may also call rateMyCacheIR() on a particular function to see the health report associated with that function's script.</li>
-            <div class="example"> ex) rateMyCacheIR(foo)</div>
+            <div class="example"><code>rateMyCacheIR(foo)</code></div>
          </ul>
          <li>The health report will be named "spew_output.[PID].0", unless otherwise specified, and will be in the same directory you ran the shell in.</li>
          <li>Go to <a href="https://carolinecullen.github.io/cacheirhealthreport/">CacheIR Health Report</a> and input the file from the previous step into the tool.</li>
