@@ -10,19 +10,8 @@ body {
 }
 
 h1 {
-  text-decoration: none;
-  text-align: center;
-}
-
-.website-title a {
-  text-decoration: none;
-  color: #faf8f8;
-  text-align: center;
-}
-
-.website-title a:hover {
   text-decoration: underline;
-  cursor: pointer;
+  text-align: center;
 }
 
 h3 {
@@ -86,6 +75,16 @@ tfoot tr:last-child td {
 
 .dropdown a:hover {
   background-color: #4b5e63;
+}
+
+.website-title a {
+  text-decoration: underline;
+  color: #faf8f8;
+}
+
+.website-title a:hover {
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 .dropdown-display {
