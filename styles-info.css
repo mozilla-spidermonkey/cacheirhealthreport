@@ -27,10 +27,6 @@ h4 {
   margin-left: 40px;
 }
 
-h5 {
-  margin-left: 80px;
-}
-
 a {
   text-decoration: underline;
   color: #faf8f8;
@@ -38,4 +34,14 @@ a {
 
 a:hover {
   cursor: pointer;
+}
+
+.sub-category-one {
+  margin-left: 50px;
+  color: #b0bbcf;
+}
+
+.sub-category-two {
+  margin-left: 60px;
+  color: #d0d6e2;
 }
