@@ -7,6 +7,7 @@ html {
 body {
   text-align: 20px;
   font: 25px;
+  line-height: 1.5;
 }
 
 h1 {
@@ -23,10 +24,6 @@ h3 {
   color: #90a0bb;
 }
 
-h4 {
-  margin-left: 40px;
-}
-
 a {
   text-decoration: underline;
   color: #faf8f8;
@@ -36,11 +33,7 @@ a:hover {
   cursor: pointer;
 }
 
-.sub-category-one {
+.example {
   margin-left: 50px;
-}
-
-.sub-category-two {
-  margin-left: 60px;
   color: #d0d6e2;
 }

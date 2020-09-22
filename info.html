@@ -8,48 +8,49 @@
    </head>
    <body>
       <h1>
-      <div class="website-title">
-         <a  href="index.html">CACHEIR HEALTH REPORT</a>
-      </div>
+         <a href="index.html">CACHEIR HEALTH REPORT</a>
       </h1>
-      <br>
       <h2>
          INFORMATION AND HELP PAGE FOR CACHEIR HEALTH REPORT TOOL
       </h2>
       <h3>
       HOW TO GENERATE AND USE A HEALTH REPORT:
       </h3>
-      <h4>
-      1. <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey/Build_Documentation"> Build SpiderMonkey's JavaScript shell</a>.<br>
-      2. Use environment variable: SPEW=RateMyCacheIR.<br>
-      3. There are three ways to generate a CacheIR Health Report:<br>
-      <div class="sub-category-one"> 
-      - Simply running a JS program using --warp will produce a health report.<br>
-      <div class="sub-category-two"> ex) SPEW=RateMyCacheIR dist/bin/js --warp jsprogram.js<br></div>
-      - In the shell you can call rateMyCacheIR() and a report will be generated for all scripts in the current zone.<br>
-      <div class="sub-category-two"> ex) rateMyCacheIR()<br></div>
-      - You may also call rateMyCacheIR() on a particular function to see the health report associated with that function's script.
-      <div class="sub-category-two"> ex) rateMyCacheIR(foo)<br></div>
-      </div>
-      4. The health report will be named "spew_output.[PID].0", unless otherwise specified, and will be in the same directory you ran the shell in.<br>
-      5. Go to <a href="https://carolinecullen.github.io/cacheirhealthreport/">CacheIR Health Report</a> and input the file from the previous step into the tool.<br>
-      </h4>
+      <p>
+      <ol> 
+         <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey/Build_Documentation"> Build SpiderMonkey's JavaScript shell</a>.</li>
+         <li>Use environment variable: SPEW=RateMyCacheIR.</li>
+         <li>There are three ways to generate a CacheIR Health Report:</li>
+         <ul> 
+            <li>Simply running a JS program using --warp will produce a health report.</li>
+            <div class="example"> ex) SPEW=RateMyCacheIR dist/bin/js --warp jsprogram.js</div>
+            <li>In the shell you can call rateMyCacheIR() and a report will be generated for all scripts in the current zone.</li>
+            <div class="example"> ex) rateMyCacheIR()</div>
+            <li>You may also call rateMyCacheIR() on a particular function to see the health report associated with that function's script.</li>
+            <div class="example"> ex) rateMyCacheIR(foo)</div>
+         </ul>
+         <li>The health report will be named "spew_output.[PID].0", unless otherwise specified, and will be in the same directory you ran the shell in.</li>
+         <li>Go to <a href="https://carolinecullen.github.io/cacheirhealthreport/">CacheIR Health Report</a> and input the file from the previous step into the tool.</li>
+      </ol>
+      </p>
       <h3>
       WHY IS THIS SCRIPT UNHAPPY?:
       </h3>
-      <h4>
-      There are a few reasons why your script is unhappy:<br>
-      1. A CacheIR stub was created for a JS_Op has a sum of costs for each of the CacheIROps in that stub that is very high.<br>
-      2. More than one non-zero hit count stub was attached to the inline cache. This is costly because we will not Warp-transpile these stubs.<br>
-      3. An inline cache entry is either megamorphic or generic.<br>
-      </h4>
+      <p>
+      There are a few reasons why your script is unhappy:
+      <ol>
+         <li>A CacheIR stub was created for a JS_Op has a sum of costs for each of the CacheIROps in that stub that is very high.</li>
+         <li>More than one non-zero hit count stub was attached to the inline cache. This is costly because we will not Warp-transpile these stubs.</li>
+         <li>An inline cache entry is either megamorphic or generic.</li>
+      </ol>
+      </p>
       <h3>
       RESOURCES:
       </h3>
-      <h4>
+      <p>
       <a href="https://searchfox.org/mozilla-central/source/js/src/jit/CacheIRHealth.h#21-37">Motivation and Description of CacheIR Health Report</a><br>
       <a href="https://searchfox.org/mozilla-central/source/js/src/jit/CacheIROps.yaml#26-49">How we decide scoring for particular CacheIROps</a><br>
       <a href="https://searchfox.org/mozilla-central/source/js/src/util/StructuredSpewer.h#42-63">How to specify a different spew file for the health report</a><br>
-      </h4>
+      </p>
    </body>
 </html>
