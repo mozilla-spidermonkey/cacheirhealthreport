@@ -24,6 +24,10 @@ h3 {
   color: #90a0bb;
 }
 
+p {
+  margin-left: 20px;
+}
+
 a {
   text-decoration: underline;
   color: #faf8f8;
