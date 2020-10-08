@@ -20,6 +20,8 @@
       <ol> 
          <li><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey/Build_Documentation"> Build SpiderMonkey's JavaScript shell</a>.</li>
          <li>Use environment variable: SPEW=RateMyCacheIR.</li>
+         <li>The SPEW environment variable is not used in optimized builds, in order to enable this in optimized builds add the below to your mozconfig to support CacheIR Health Report:</li>
+         <div class="example"><code>ac_add_options --enable-jitspew</code></div>
          <li>There are three ways to generate a CacheIR Health Report:</li>
          <ul> 
             <li>Simply running a JS program using --warp will produce a health report.</li>
