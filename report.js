@@ -6,6 +6,12 @@ const MODE = [
   "Generic"
 ];
 
+const CONTEXT = [
+  "Shell",
+  "Transition",
+  "Trial Inlining",
+];
+
 const HAPPINESS = [
   "🤬",
   "☹️",
@@ -169,11 +175,15 @@ function createOpTableRow(entry, opTbody, happinessFilter) {
   }
 }
 
-function createOpTable(entries, opTable, opTbody, happinessFilter) {
+function createOpTable(context, script, opTable, opTbody, happinessFilter) {
   opTable.style.display = "inline-block";
 
-  for (let entry of entries) {
-    createOpTableRow(entry, opTbody, happinessFilter);
+  if (context == 0) {
+    for (let entry of script.entries) {
+      createOpTableRow(entry, opTbody, happinessFilter);
+    }
+  } else {
+    createOpTableRow(script, opTbody, happinessFilter);
   }
 
   if (isFiltered && opTbody.innerHTML == "") {
@@ -185,7 +195,12 @@ function createOpTable(entries, opTable, opTbody, happinessFilter) {
 
 // Create table for displaying scripts and their associated information.
 function createScriptTableRow(script, scriptTbody, happinessFilter) {
-  let health = script.scriptHappiness;
+  let context = script.location.spewContext;
+  let health;
+  if (context == 0) {
+    health = script.scriptHappiness;
+  }
+
   if (happinessFilter == undefined || happinessFilter == health) {
     let row = document.createElement("tr");
 
@@ -198,8 +213,17 @@ function createScriptTableRow(script, scriptTbody, happinessFilter) {
     // Add column number to table.
     addCellValue(row, script.location.column);
 
-    // Add health score for the script.
-    addCellValue(row, HAPPINESS[health]);
+    // Add context to table.
+    addCellValue(row, CONTEXT[script.spewContext]);
+
+    // Add script health only when we have spewed the whole script from 
+    // the shell.
+    if (context == 0) {
+      // Add health score for the script.
+      addCellValue(row, HAPPINESS[health]);
+    } else {
+      addCellValue(row, "No value for script");
+    }
 
     row.onclick = function() {
       let opTable = document.getElementById("op-table");
@@ -218,7 +242,7 @@ function createScriptTableRow(script, scriptTbody, happinessFilter) {
         clearCacheIRTable("");
       }
 
-      createOpTable(script.entries, opTable, opTbody, happinessFilter);
+      createOpTable(context, script, opTable, opTbody, happinessFilter);
     };
 
 
