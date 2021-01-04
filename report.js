@@ -229,7 +229,9 @@ function createScriptTableRow(script, scriptTbody, happinessFilter) {
       // Add health score for the script.
       addCellValue(row, HAPPINESS[health]);
     } else {
-      addCellValue(row, "No value for script");
+      // If spew context is not shell, then we only spew the CacheIR for 
+      // unhappy ICs.
+      addCellValue(row, HAPPINESS[0]);
     }
 
     row.onclick = function() {
