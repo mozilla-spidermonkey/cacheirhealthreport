@@ -1,0 +1,209 @@
+
+[
+  {
+    "channel": "RateMyCacheIR",
+    "location": {
+      "filename": "../jit-test/tests/cacheir/unaryarith.js",
+      "line": 3,
+      "column": 15
+    },
+    "spewContext": 1,
+    "op": "Call",
+    "lineno": 9,
+    "column": 23,
+    "stubs": [
+      {
+        "cacheIROps": [
+          {
+            "cacheIROp": "LoadArgumentDynamicSlot",
+            "opHealth": 1
+          },
+          {
+            "cacheIROp": "GuardToObject",
+            "opHealth": 1
+          },
+          {
+            "cacheIROp": "GuardClass",
+            "opHealth": 1
+          },
+          {
+            "cacheIROp": "GuardFunctionScript",
+            "opHealth": 1
+          },
+          {
+            "cacheIROp": "CallScriptedFunction",
+            "opHealth": 3
+          },
+          {
+            "cacheIROp": "ReturnFromIC",
+            "opHealth": 1
+          }
+        ],
+        "stubHealth": 8,
+        "stubHappiness": 3,
+        "hitCount": 30
+      },
+      {
+        "cacheIROps": [
+          {
+            "cacheIROp": "LoadArgumentDynamicSlot",
+            "opHealth": 1
+          },
+          {
+            "cacheIROp": "GuardToObject",
+            "opHealth": 1
+          },
+          {
+            "cacheIROp": "GuardClass",
+            "opHealth": 1
+          },
+          {
+            "cacheIROp": "GuardFunctionScript",
+            "opHealth": 1
+          },
+          {
+            "cacheIROp": "CallScriptedFunction",
+            "opHealth": 3
+          },
+          {
+            "cacheIROp": "ReturnFromIC",
+            "opHealth": 1
+          }
+        ],
+        "stubHealth": 8,
+        "stubHappiness": 3,
+        "hitCount": 1
+      },
+      {
+        "cacheIROps": [
+          {
+            "cacheIROp": "LoadArgumentDynamicSlot",
+            "opHealth": 1
+          },
+          {
+            "cacheIROp": "GuardToObject",
+            "opHealth": 1
+          },
+          {
+            "cacheIROp": "GuardClass",
+            "opHealth": 1
+          },
+          {
+            "cacheIROp": "GuardFunctionScript",
+            "opHealth": 1
+          },
+          {
+            "cacheIROp": "CallScriptedFunction",
+            "opHealth": 3
+          },
+          {
+            "cacheIROp": "ReturnFromIC",
+            "opHealth": 1
+          }
+        ],
+        "stubHealth": 8,
+        "stubHappiness": 3,
+        "hitCount": 1
+      },
+      {
+        "cacheIROps": [
+          {
+            "cacheIROp": "LoadArgumentDynamicSlot",
+            "opHealth": 1
+          },
+          {
+            "cacheIROp": "GuardToObject",
+            "opHealth": 1
+          },
+          {
+            "cacheIROp": "GuardClass",
+            "opHealth": 1
+          },
+          {
+            "cacheIROp": "GuardFunctionScript",
+            "opHealth": 1
+          },
+          {
+            "cacheIROp": "CallScriptedFunction",
+            "opHealth": 3
+          },
+          {
+            "cacheIROp": "ReturnFromIC",
+            "opHealth": 1
+          }
+        ],
+        "stubHealth": 8,
+        "stubHappiness": 3,
+        "hitCount": 1
+      },
+      {
+        "cacheIROps": [
+          {
+            "cacheIROp": "LoadArgumentDynamicSlot",
+            "opHealth": 1
+          },
+          {
+            "cacheIROp": "GuardToObject",
+            "opHealth": 1
+          },
+          {
+            "cacheIROp": "GuardClass",
+            "opHealth": 1
+          },
+          {
+            "cacheIROp": "GuardFunctionScript",
+            "opHealth": 1
+          },
+          {
+            "cacheIROp": "CallScriptedFunction",
+            "opHealth": 3
+          },
+          {
+            "cacheIROp": "ReturnFromIC",
+            "opHealth": 1
+          }
+        ],
+        "stubHealth": 8,
+        "stubHappiness": 3,
+        "hitCount": 1
+      },
+      {
+        "cacheIROps": [
+          {
+            "cacheIROp": "LoadArgumentDynamicSlot",
+            "opHealth": 1
+          },
+          {
+            "cacheIROp": "GuardToObject",
+            "opHealth": 1
+          },
+          {
+            "cacheIROp": "GuardSpecificFunction",
+            "opHealth": 1
+          },
+          {
+            "cacheIROp": "CallScriptedFunction",
+            "opHealth": 3
+          },
+          {
+            "cacheIROp": "ReturnFromIC",
+            "opHealth": 1
+          }
+        ],
+        "stubHealth": 7,
+        "stubHappiness": 3,
+        "hitCount": 1
+      }
+    ],
+    "entryHappiness": 0,
+    "mode": 1,
+    "fallbackCount": 1
+  },
+  {
+    "channel": "RateMyCacheIR",
+    "filename": "../jit-test/tests/cacheir/unaryarith.js",
+    "line": 3,
+    "column": 15,
+    "finalWarmUpCount": 1282
+  }
+]

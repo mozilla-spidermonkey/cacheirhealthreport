@@ -6,16 +6,25 @@ const MODE = [
   "Generic"
 ];
 
+const CONTEXT = [
+  "Shell",
+  "Transition",
+  "Trial Inlining",
+];
+
 const HAPPINESS = [
   "🤬",
   "☹️",
   "😐",
-  "😀" 
+  "😀"
 ];
 
 const SCRIPT_HEADER_ROWS = 1;
 const JSOP_HEADER_ROWS = 1;
 const STUB_HEADER_ROWS = 2;
+
+const SCRIPT_NAME_COLUMN = 0;
+const SCRIPT_HIT_COUNT_COLUMN = 3;
 
 var PARSED_JSON;
 var isFiltered = false;
@@ -169,11 +178,15 @@ function createOpTableRow(entry, opTbody, happinessFilter) {
   }
 }
 
-function createOpTable(entries, opTable, opTbody, happinessFilter) {
+function createOpTable(context, script, opTable, opTbody, happinessFilter) {
   opTable.style.display = "inline-block";
 
-  for (let entry of entries) {
-    createOpTableRow(entry, opTbody, happinessFilter);
+  if (context == 0) {
+    for (let entry of script.entries) {
+      createOpTableRow(entry, opTbody, happinessFilter);
+    }
+  } else {
+    createOpTableRow(script, opTbody, happinessFilter);
   }
 
   if (isFiltered && opTbody.innerHTML == "") {
@@ -185,8 +198,14 @@ function createOpTable(entries, opTable, opTbody, happinessFilter) {
 
 // Create table for displaying scripts and their associated information.
 function createScriptTableRow(script, scriptTbody, happinessFilter) {
-  let health = script.scriptHappiness;
-  if (happinessFilter == undefined || happinessFilter == health) {
+  let context = script.location.spewContext;
+  let health = undefined;
+  if (context == 0) {
+    health = script.scriptHappiness;
+  }
+
+  if (health == undefined || happinessFilter == undefined ||
+    happinessFilter == health) {
     let row = document.createElement("tr");
 
     // Add script name to table.
@@ -198,8 +217,22 @@ function createScriptTableRow(script, scriptTbody, happinessFilter) {
     // Add column number to table.
     addCellValue(row, script.location.column);
 
-    // Add health score for the script.
-    addCellValue(row, HAPPINESS[health]);
+    // Add final hit count to table.
+    addCellValue(row, undefined);
+
+    // Add context to table.
+    addCellValue(row, CONTEXT[script.spewContext]);
+
+    // Add script health only when we have spewed the whole script from 
+    // the shell.
+    if (context == 0) {
+      // Add health score for the script.
+      addCellValue(row, HAPPINESS[health]);
+    } else {
+      // If spew context is not shell, then we only spew the CacheIR for 
+      // unhappy ICs.
+      addCellValue(row, HAPPINESS[0]);
+    }
 
     row.onclick = function() {
       let opTable = document.getElementById("op-table");
@@ -218,11 +251,21 @@ function createScriptTableRow(script, scriptTbody, happinessFilter) {
         clearCacheIRTable("");
       }
 
-      createOpTable(script.entries, opTable, opTbody, happinessFilter);
+      createOpTable(context, script, opTable, opTbody, happinessFilter);
     };
 
 
     scriptTbody.appendChild(row);
+  }
+}
+
+// Add final warm up count to script table.
+function insertFinalWarmUpCountIntoTable(script, scriptTbody) {
+  for (let row = 0; row < scriptTbody.rows.length; row++) {
+    let filename = scriptTbody.rows[row].cells[SCRIPT_NAME_COLUMN].innerHTML;
+    if (filename === script.filename) {
+      scriptTbody.rows[row].cells[SCRIPT_HIT_COUNT_COLUMN].innerHTML = script.finalWarmUpCount;
+    }
   }
 }
 
@@ -237,7 +280,11 @@ function createScriptTable(happinessFilter) {
       document.getElementById("status").textContent = "Wrong JSON spew channel."
     }
 
-    createScriptTableRow(script, scriptTbody, happinessFilter);
+    if (script.hasOwnProperty('finalWarmUpCount')) {
+      insertFinalWarmUpCountIntoTable(script, scriptTbody);
+    } else {
+      createScriptTableRow(script, scriptTbody, happinessFilter);
+    }
 
     if (isFiltered && scriptTbody.innerHTML == "") {
       let row = document.createElement("tr");
@@ -335,7 +382,7 @@ function clearCacheIRTable(displayString) {
 
 function clearAllTables() {
   document.getElementById("happiness-options").classList.remove("dropdown-display");
-  
+
   clearScriptTable("");
   clearOpTable("");
   clearStubTable("");
