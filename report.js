@@ -183,7 +183,7 @@ function createOpTableRow(entry, opTbody, happinessFilter) {
 function createOpTable(context, script, opTable, opTbody, happinessFilter) {
   opTable.style.display = "inline-block";
 
-  if (context == 0) {
+  if (context == "Shell") {
     for (let entry of script.entries) {
       createOpTableRow(entry, opTbody, happinessFilter);
     }
@@ -200,9 +200,9 @@ function createOpTable(context, script, opTable, opTbody, happinessFilter) {
 
 // Create table for displaying scripts and their associated information.
 function createScriptTableRow(script, scriptTbody, happinessFilter) {
-  let context = script.location.spewContext;
+  let context = CONTEXT[script.spewContext];
   let health = undefined;
-  if (context == 0) {
+  if (context == "Shell") {
     health = script.scriptHappiness;
   } else {
     // If spew context is not shell, then we only spew the CacheIR for 
@@ -226,7 +226,7 @@ function createScriptTableRow(script, scriptTbody, happinessFilter) {
     addCellValue(row, undefined);
 
     // Add context to table.
-    addCellValue(row, CONTEXT[script.spewContext]);
+    addCellValue(row, context);
 
     // Add script health only when we have spewed the whole script from 
     // the shell.
@@ -287,12 +287,12 @@ function createScriptTable(happinessFilter) {
     } else {
       createScriptTableRow(script, scriptTbody, happinessFilter);
     }
+  }
 
-    if (isFiltered && scriptTbody.innerHTML == "") {
-      let row = document.createElement("tr");
-      addCellValue(row, "No scripts have happiness level specified by filter.");
-      scriptTbody.appendChild(row);
-    }
+  if (isFiltered && scriptTbody.innerHTML == "") {
+    let row = document.createElement("tr");
+    addCellValue(row, "No scripts have happiness level specified by filter.");
+    scriptTbody.appendChild(row);
   }
 }
 
