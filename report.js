@@ -202,6 +202,10 @@ function createScriptTableRow(script, scriptTbody, happinessFilter) {
   let health = undefined;
   if (context == 0) {
     health = script.scriptHappiness;
+  } else {
+    // If spew context is not shell, then we only spew the CacheIR for 
+    // unhappy ICs.
+    health = 0;
   }
 
   if (health == undefined || happinessFilter == undefined ||
@@ -229,8 +233,7 @@ function createScriptTableRow(script, scriptTbody, happinessFilter) {
       // Add health score for the script.
       addCellValue(row, HAPPINESS[health]);
     } else {
-      // If spew context is not shell, then we only spew the CacheIR for 
-      // unhappy ICs.
+      
       addCellValue(row, HAPPINESS[0]);
     }
 
