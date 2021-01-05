@@ -24,6 +24,8 @@ const JSOP_HEADER_ROWS = 1;
 const STUB_HEADER_ROWS = 2;
 
 const SCRIPT_NAME_COLUMN = 0;
+const SCRIPT_LINE_COLUMN = 1;
+const SCRIPT_COLUMN_COLUMN = 2;
 const SCRIPT_HIT_COUNT_COLUMN = 3;
 
 var PARSED_JSON;
@@ -208,8 +210,7 @@ function createScriptTableRow(script, scriptTbody, happinessFilter) {
     health = 0;
   }
 
-  if (health == undefined || happinessFilter == undefined ||
-    happinessFilter == health) {
+  if (happinessFilter == health || happinessFilter == undefined) {
     let row = document.createElement("tr");
 
     // Add script name to table.
@@ -229,13 +230,7 @@ function createScriptTableRow(script, scriptTbody, happinessFilter) {
 
     // Add script health only when we have spewed the whole script from 
     // the shell.
-    if (context == 0) {
-      // Add health score for the script.
-      addCellValue(row, HAPPINESS[health]);
-    } else {
-      
-      addCellValue(row, HAPPINESS[0]);
-    }
+    addCellValue(row, HAPPINESS[health]);
 
     row.onclick = function() {
       let opTable = document.getElementById("op-table");
@@ -266,7 +261,11 @@ function createScriptTableRow(script, scriptTbody, happinessFilter) {
 function insertFinalWarmUpCountIntoTable(script, scriptTbody) {
   for (let row = 0; row < scriptTbody.rows.length; row++) {
     let filename = scriptTbody.rows[row].cells[SCRIPT_NAME_COLUMN].innerHTML;
-    if (filename === script.filename) {
+    let lineno = scriptTbody.rows[row].cells[SCRIPT_LINE_COLUMN].innerHTML;
+    let column = scriptTbody.rows[row].cells[SCRIPT_COLUMN_COLUMN].innerHTML;
+
+    if (filename == script.filename && lineno == script.line && 
+        column == script.column) {
       scriptTbody.rows[row].cells[SCRIPT_HIT_COUNT_COLUMN].innerHTML = script.finalWarmUpCount;
     }
   }
