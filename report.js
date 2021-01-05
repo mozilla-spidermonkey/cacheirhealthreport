@@ -24,6 +24,8 @@ const JSOP_HEADER_ROWS = 1;
 const STUB_HEADER_ROWS = 2;
 
 const SCRIPT_NAME_COLUMN = 0;
+const SCRIPT_LINE_COLUMN = 1;
+const SCRIPT_COLUMN_COLUMN = 2;
 const SCRIPT_HIT_COUNT_COLUMN = 3;
 
 var PARSED_JSON;
@@ -181,7 +183,7 @@ function createOpTableRow(entry, opTbody, happinessFilter) {
 function createOpTable(context, script, opTable, opTbody, happinessFilter) {
   opTable.style.display = "inline-block";
 
-  if (context == 0) {
+  if (context == "Shell") {
     for (let entry of script.entries) {
       createOpTableRow(entry, opTbody, happinessFilter);
     }
@@ -198,14 +200,17 @@ function createOpTable(context, script, opTable, opTbody, happinessFilter) {
 
 // Create table for displaying scripts and their associated information.
 function createScriptTableRow(script, scriptTbody, happinessFilter) {
-  let context = script.location.spewContext;
+  let context = CONTEXT[script.spewContext];
   let health = undefined;
-  if (context == 0) {
+  if (context == "Shell") {
     health = script.scriptHappiness;
+  } else {
+    // If spew context is not shell, then we only spew the CacheIR for 
+    // unhappy ICs.
+    health = 0;
   }
 
-  if (health == undefined || happinessFilter == undefined ||
-    happinessFilter == health) {
+  if (happinessFilter == health || happinessFilter == undefined) {
     let row = document.createElement("tr");
 
     // Add script name to table.
@@ -221,18 +226,11 @@ function createScriptTableRow(script, scriptTbody, happinessFilter) {
     addCellValue(row, undefined);
 
     // Add context to table.
-    addCellValue(row, CONTEXT[script.spewContext]);
+    addCellValue(row, context);
 
     // Add script health only when we have spewed the whole script from 
     // the shell.
-    if (context == 0) {
-      // Add health score for the script.
-      addCellValue(row, HAPPINESS[health]);
-    } else {
-      // If spew context is not shell, then we only spew the CacheIR for 
-      // unhappy ICs.
-      addCellValue(row, HAPPINESS[0]);
-    }
+    addCellValue(row, HAPPINESS[health]);
 
     row.onclick = function() {
       let opTable = document.getElementById("op-table");
@@ -263,7 +261,11 @@ function createScriptTableRow(script, scriptTbody, happinessFilter) {
 function insertFinalWarmUpCountIntoTable(script, scriptTbody) {
   for (let row = 0; row < scriptTbody.rows.length; row++) {
     let filename = scriptTbody.rows[row].cells[SCRIPT_NAME_COLUMN].innerHTML;
-    if (filename === script.filename) {
+    let lineno = scriptTbody.rows[row].cells[SCRIPT_LINE_COLUMN].innerHTML;
+    let column = scriptTbody.rows[row].cells[SCRIPT_COLUMN_COLUMN].innerHTML;
+
+    if (filename == script.filename && lineno == script.line && 
+        column == script.column) {
       scriptTbody.rows[row].cells[SCRIPT_HIT_COUNT_COLUMN].innerHTML = script.finalWarmUpCount;
     }
   }
@@ -285,12 +287,12 @@ function createScriptTable(happinessFilter) {
     } else {
       createScriptTableRow(script, scriptTbody, happinessFilter);
     }
+  }
 
-    if (isFiltered && scriptTbody.innerHTML == "") {
-      let row = document.createElement("tr");
-      addCellValue(row, "No scripts have happiness level specified by filter.");
-      scriptTbody.appendChild(row);
-    }
+  if (isFiltered && scriptTbody.innerHTML == "") {
+    let row = document.createElement("tr");
+    addCellValue(row, "No scripts have happiness level specified by filter.");
+    scriptTbody.appendChild(row);
   }
 }
 
