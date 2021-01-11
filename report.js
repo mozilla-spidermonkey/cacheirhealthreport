@@ -27,9 +27,10 @@ const SCRIPT_NAME_COLUMN = 0;
 const SCRIPT_LINE_COLUMN = 1;
 const SCRIPT_COLUMN_COLUMN = 2;
 const SCRIPT_HIT_COUNT_COLUMN = 3;
+const SCRIPT_HEALTH_COLUMN = 4;
 
 var PARSED_JSON;
-var isFiltered = false;
+var happinessFilter = undefined;
 
 var selectedScriptRowNumber;
 var selectedJSOpRowNumber;
@@ -120,7 +121,7 @@ function createStubTable(cacheIRTable, cacheIRTbody, stubTbody, entry) {
 }
 
 // Create table for displaying JS_OPs and their associated information.
-function createOpTableRow(entry, opTbody, happinessFilter) {
+function createOpTableRow(entry, opTbody) {
   let health = entry.entryHappiness;
 
   if (happinessFilter == undefined || happinessFilter == health) {
@@ -180,18 +181,18 @@ function createOpTableRow(entry, opTbody, happinessFilter) {
   }
 }
 
-function createOpTable(context, script, opTable, opTbody, happinessFilter) {
+function createOpTable(context, script, opTable, opTbody) {
   opTable.style.display = "inline-block";
 
   if (context == "Shell") {
     for (let entry of script.entries) {
-      createOpTableRow(entry, opTbody, happinessFilter);
+      createOpTableRow(entry, opTbody);
     }
   } else {
-    createOpTableRow(script, opTbody, happinessFilter);
+    createOpTableRow(script, opTbody);
   }
 
-  if (isFiltered && opTbody.innerHTML == "") {
+  if (happinessFilter && opTbody.innerHTML == "") {
     let row = document.createElement("tr");
     addCellValue(row, "No stubs have happiness level specified by filter.");
     opTbody.appendChild(row);
@@ -199,7 +200,7 @@ function createOpTable(context, script, opTable, opTbody, happinessFilter) {
 }
 
 // Create table for displaying scripts and their associated information.
-function createScriptTableRow(script, scriptTbody, happinessFilter) {
+function createScriptTableRow(script, scriptTbody) {
   let context = CONTEXT[script.spewContext];
   let health = undefined;
   if (context == "Shell") {
@@ -249,7 +250,7 @@ function createScriptTableRow(script, scriptTbody, happinessFilter) {
         clearCacheIRTable("");
       }
 
-      createOpTable(context, script, opTable, opTbody, happinessFilter);
+      createOpTable(context, script, opTable, opTbody);
     };
 
 
@@ -266,16 +267,15 @@ function insertFinalWarmUpCountIntoTable(script, scriptTbody) {
 
     if (filename == script.filename && lineno == script.line && 
         column == script.column) {
-      scriptTbody.rows[row].cells[SCRIPT_HIT_COUNT_COLUMN].innerHTML = script.finalWarmUpCount;
+      scriptTbody.rows[row].cells[SCRIPT_HIT_COUNT_COLUMN].innerHTML = parseInt(script.finalWarmUpCount);
     }
   }
 }
 
-function createScriptTable(happinessFilter) {
+function createScriptTable() {
   let scriptTable = document.getElementById("script-table");
   let scriptTbody = scriptTable.getElementsByTagName('tbody')[0];
   scriptTable.style.display = "inline-block";
-  document.getElementById("happiness-filter").style.display = "inline-block";
 
   for (let script of PARSED_JSON) {
     if (script.channel != "RateMyCacheIR") {
@@ -285,15 +285,17 @@ function createScriptTable(happinessFilter) {
     if (script.hasOwnProperty('finalWarmUpCount')) {
       insertFinalWarmUpCountIntoTable(script, scriptTbody);
     } else {
-      createScriptTableRow(script, scriptTbody, happinessFilter);
+      createScriptTableRow(script, scriptTbody);
     }
   }
 
-  if (isFiltered && scriptTbody.innerHTML == "") {
+  if (happinessFilter && scriptTbody.innerHTML == "") {
     let row = document.createElement("tr");
     addCellValue(row, "No scripts have happiness level specified by filter.");
     scriptTbody.appendChild(row);
   }
+
+  document.getElementById("happiness-filter").style.display = "inline-block";
 }
 
 function handleJSON(event) {
@@ -312,47 +314,55 @@ function handleJSON(event) {
       return;
     }
 
-    createScriptTable(undefined);
+    createScriptTable();
   };
 
   reader.readAsText(file);
   event.preventDefault();
 }
 
-document.getElementById("form").addEventListener("submit", function() {
+document.getElementById("input-form").addEventListener("submit", function() {
   handleJSON(event);
 });
 
-function filterOpTable(happinessFilter) {
+function filterOpTableHappiness() {
   clearAllTables();
-  createScriptTable(happinessFilter);
-
-  isFiltered = true;
+  createScriptTable();
 }
 
 document.getElementById("clear-filter").addEventListener("click", function() {
-  clearAllTables();
-  createScriptTable(undefined);
+  if (happinessFilter != undefined) {
+    happinessFilter = undefined;
+    filterOpTableHappiness();
+  }
 });
 
 document.getElementById("sad").addEventListener("click", function() {
-  filterOpTable(0);
+  if (happinessFilter != 0) {
+    happinessFilter = 0;
+    filterOpTableHappiness();
+  }
 });
 
 document.getElementById("medium-sad").addEventListener("click", function() {
-  filterOpTable(1);
+  if (happinessFilter != 1) {
+    happinessFilter = 1;
+    filterOpTableHappiness();
+  }
 });
 
 document.getElementById("medium-happy").addEventListener("click", function() {
-  filterOpTable(2);
+  if (happinessFilter != 2) {
+    happinessFilter = 2;
+    filterOpTableHappiness();
+  }
 });
 
 document.getElementById("happy").addEventListener("click", function() {
-  filterOpTable(3);
-});
-
-document.getElementById("happiness-filter").addEventListener("click", function() {
-  document.getElementById("happiness-options").classList.toggle("dropdown-display");
+  if (happinessFilter != 3) {
+    happinessFilter = 3;
+    filterOpTableHappiness();
+  }
 });
 
 function clearScriptTable(displayString) {
@@ -383,8 +393,6 @@ function clearCacheIRTable(displayString) {
 }
 
 function clearAllTables() {
-  document.getElementById("happiness-options").classList.remove("dropdown-display");
-
   clearScriptTable("");
   clearOpTable("");
   clearStubTable("");
@@ -392,7 +400,7 @@ function clearAllTables() {
 }
 
 document.getElementById("clear").addEventListener("click", function() {
-  document.getElementById("form").reset();
+  document.getElementById("input-form").reset();
   document.getElementById("happiness-filter").style.display = "";
   document.getElementById("status").style.color = "#c9f0ff";
 
