@@ -12,40 +12,33 @@
          <a  href="info.html">CACHEIR HEALTH REPORT</a>
       </div>
       </h1>
-      <form id="form">
-         <div>
+      <div>
+         <form id="input-form">
             <label for="file">JSON FILE</label>
-            <input type=file id="file">
-            <div>
-               <button class="button" id="submit">SUBMIT</button>
-            </div>
-         </div>
-      </form>
-      <div>
-         <button class="button" id="clear">CLEAR</button>
+            <input type=file id="file"><br><br>
+            <input class="button" id="submit" type="submit" value="SUBMIT">
+            <input class="button" id="clear" type="reset" value="CLEAR">
+         </form>
       </div>
-      <div>
-         <button class="button" id="happiness-filter">HAPPINESS FILTER</button>
-         <div class="dropdown" id="happiness-options">
-            <a id="clear-filter">🚫</a>
-            <a id="sad">🤬</a>
-            <a id="medium-sad">☹️</a>
-            <a id="medium-happy">😐</a>
-            <a id="happy">😀</a>
-         </div>
-      </div>
+      <select class="button filter" id="happiness-filter">
+        <option id="clear-filter">HAPPINESS FILTER: 🚫</option>
+        <option id="sad">HAPPINESS FILTER: 🤬</option>
+        <option id="medium-sad">HAPPINESS FILTER: ☹️</option>
+        <option id="medium-happy">HAPPINESS FILTER: 😐</option>
+        <option id="happy">HAPPINESS FILTER: 😀</option>
+      </select>
       <br>
       <div id="status"></div>
       <br>
       <table class="selectable" id="script-table">
          <thead>
             <tr>
-               <th>SCRIPT</th>
-               <th>LINE</th>
-               <th>COLUMN</th>
-               <th>HIT COUNT</th>
-               <th>CONTEXT</th>
-               <th>HEALTH</th>
+               <th data-sort-method='none'>SCRIPT</th>
+               <th data-sort-method='none'>LINE</th>
+               <th data-sort-method='none'>COLUMN</th>
+               <th class="sortable">HIT COUNT ↕️</th>
+               <th data-sort-method='none'>CONTEXT</th>
+               <th data-sort-method='none'>HEALTH</th>
             </tr>
          </thead>
          <tbody></tbody>
@@ -86,4 +79,6 @@
       </table>
    </body>
    <script src="report.js"></script>
+   <script src="lib/tablesort/tablesort.js"></script>
+   <script>new Tablesort(document.getElementById("script-table"), { ascending: false });</script>
 </html>
