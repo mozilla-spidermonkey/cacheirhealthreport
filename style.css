@@ -36,15 +36,19 @@ th {
   position: sticky;
   top: 0;
   background-color: #846075;
+  max-width: 250px;
 }
 
 th,
 td {
   border-bottom: 1px solid #c9f0ff;
   padding: 10px;
+  max-width: 250px;
+  word-wrap: break-word;
 }
 
 tfoot tr:last-child td {
+  max-width: 250px;
   border-bottom: 0;
 }
 
