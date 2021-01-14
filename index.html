@@ -36,7 +36,7 @@
                <th data-sort-method='none'>SCRIPT</th>
                <th data-sort-method='none'>LINE</th>
                <th data-sort-method='none'>COLUMN</th>
-               <th class="sortable">HIT COUNT ↕️</th>
+               <th data-sort-method='number' class="sortable">HIT COUNT ↕️</th>
                <th data-sort-method='none'>CONTEXT</th>
                <th data-sort-method='none'>HEALTH</th>
             </tr>
@@ -80,5 +80,6 @@
    </body>
    <script src="report.js"></script>
    <script src="lib/tablesort/tablesort.js"></script>
+   <script src="lib/tablesort/tablesort.number.js"></script>
    <script>new Tablesort(document.getElementById("script-table"), { ascending: false });</script>
 </html>
