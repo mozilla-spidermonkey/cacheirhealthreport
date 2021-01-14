@@ -267,7 +267,7 @@ function insertFinalWarmUpCountIntoTable(script, scriptTbody) {
 
     if (filename == script.filename && lineno == script.line && 
         column == script.column) {
-      scriptTbody.rows[row].cells[SCRIPT_HIT_COUNT_COLUMN].innerHTML = parseInt(script.finalWarmUpCount);
+      scriptTbody.rows[row].cells[SCRIPT_HIT_COUNT_COLUMN].innerHTML = parseFloat(script.finalWarmUpCount);
     }
   }
 }
