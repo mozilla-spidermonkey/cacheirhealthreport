@@ -20,20 +20,31 @@
       <ol> 
          <li><a href="https://firefox-source-docs.mozilla.org/js/build.html"> Build SpiderMonkey's JavaScript shell</a>.</li>
          <li>Use environment variable: SPEW=RateMyCacheIR.</li>
-         <li>The SPEW environment variable is not used in optimized builds, in order to enable this in optimized builds add the below to your mozconfig to support CacheIR Health Report:</li>
+         <li>The SPEW environment variable is not used in optimized browser builds, in order to enable this in optimized browser builds add the below to your mozconfig to support CacheIR Health Report:</li>
          <div class="example"><code>ac_add_options --enable-jitspew</code></div>
-         <li>There are three ways to generate a CacheIR Health Report:</li>
+         <li>There are four ways to generate a CacheIR Health Report:</li>
          <ul> 
-            <li>Simply running a JS program using --warp will produce a health report.</li>
-            <div class="example"><code>SPEW=RateMyCacheIR dist/bin/js --warp jsprogram.js</code></div>
+            <li>Build and run the browser with the two aforementioned evironment and mozconfig 
+            options.</li>
+            <div class="example"><code>SPEW=RateMyCacheIR ./mach run</code></div>
+            <li>Running a JS program will produce a health report.</li>
+            <div class="example"><code>SPEW=RateMyCacheIR dist/bin/js jsprogram.js</code></div>
             <li>In the shell you can call rateMyCacheIR() and a report will be generated for all scripts in the current zone.</li>
             <div class="example"><code>rateMyCacheIR()</code></div>
             <li>You may also call rateMyCacheIR() on a particular function to see the health report associated with that function's script.</li>
             <div class="example"><code>rateMyCacheIR(foo)</code></div>
          </ul>
-         <li>The health report will be named "spew_output.[PID].0", unless otherwise specified, and will be in the same directory you ran the shell in.</li>
+         <li>The health report will be named "spew_output.[PID].0", unless otherwise specified, and will be in the same directory you ran the browser or shell from.</li>
          <li>Go to <a href="https://carolinecullen.github.io/cacheirhealthreport/">CacheIR Health Report</a> and input the file from the previous step into the tool.</li>
       </ol>
+      </p>
+      <h3>
+      TIPS:
+      </h3>
+      <p>
+      <ul>
+         <li>To reduce the size of spewed data, <a href="https://searchfox.org/mozilla-central/source/js/src/jit/JitSpewer.cpp#95-97">IONFILTER</a> is an environment variable you may use to select specific functions or filenames. This may be helpful when a website you would like to see a report for is producing very large spew output files.</li>
+      </ul>
       </p>
       <h3>
       WHY IS THIS SCRIPT UNHAPPY?:
