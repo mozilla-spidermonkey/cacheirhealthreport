@@ -19,6 +19,22 @@ const HAPPINESS = [
   "😀"
 ];
 
+const FIELD_TYPE =  [
+  "RawInt32",
+  "RawPointer",
+  "Shape",
+  "ObjectGroup",
+  "JSObject",
+  "Symbol",
+  "String",
+  "BaseScript",
+  "Id",
+  "RawInt64",
+  "First64BitType",
+  "Value",
+  "Limit"
+];
+
 const SCRIPT_HEADER_ROWS = 1;
 const JSOP_HEADER_ROWS = 1;
 const STUB_HEADER_ROWS = 2;
@@ -72,6 +88,24 @@ function addCellValue(row, value) {
   cell.appendChild(text);
 }
 
+// Create table for displaying stub field information.
+function createStubFieldTable(stubFields) {
+  let stubFieldTable = document.getElementById("stubfield-table");
+
+  if (stubFieldTable.style.display === "") {
+    stubFieldTable.style.display = "inline-block";
+  } else {
+    clearStubFieldTable("inline-block");
+  }
+  
+  for (let field of stubFields) {
+    let row = document.createElement("tr");
+    addCellValue(row, FIELD_TYPE[field.fieldType]);
+    addCellValue(row, field.numStubfieldValues);
+    stubFieldTable.getElementsByTagName('tbody')[0].appendChild(row);
+  }
+}
+
 // Create table for displaying CacheIROps contained in selected stub.
 function createCacheIRTable(cacheIRTbody, stub) {
   if (stub.cacheIROps.length) {
@@ -90,34 +124,33 @@ function createCacheIRTable(cacheIRTbody, stub) {
 
 // Create table for displaying stub chain for the selected JS_OP.
 function createStubTable(cacheIRTable, cacheIRTbody, stubTbody, entry) {
-  if (entry.stubs.length) {
-    for (let stub of entry.stubs) {
-      let row = document.createElement("tr");
-
-      addCellValue(row, stub.stubHealth);
-      addCellValue(row, stub.hitCount);
-
-      row.onclick = function() {
-        // Highlight selected stub row.
-        highlightSelectedStub(stubTbody, row);
-
-        if (cacheIRTable.style.display === "") {
-          cacheIRTable.style.display = "inline-block";
-        } else {
-          clearCacheIRTable("inline-block");
-        }
-
-        createCacheIRTable(cacheIRTbody, stub);
-      };
-
-      stubTbody.appendChild(row);
-    }
-  } else {
+  for (let stub of entry.stubs) {
     let row = document.createElement("tr");
-    addCellValue(row, "No Stubs Attached.");
+
+    addCellValue(row, stub.stubHealth);
+    addCellValue(row, stub.hitCount);
+
+    row.onclick = function() {
+      // Highlight selected stub row.
+      highlightSelectedStub(stubTbody, row);
+
+      if (cacheIRTable.style.display === "") {
+        cacheIRTable.style.display = "inline-block";
+      } else {
+        clearCacheIRTable("inline-block");
+      }
+
+      createCacheIRTable(cacheIRTbody, stub);
+
+      if (entry.hasOwnProperty('stubFields')) {
+        createStubFieldTable(entry.stubFields);
+      } else {
+        clearStubFieldTable("");
+      }
+    };
+
     stubTbody.appendChild(row);
   }
-
 }
 
 // Create table for displaying JS_OPs and their associated information.
@@ -157,6 +190,7 @@ function createOpTableRow(entry, opTbody) {
           // created tables.
           clearStubTable("inline-block");
           clearCacheIRTable("");
+          clearStubFieldTable("");
         }
 
         // For the display of the selected JS_Op.
@@ -165,6 +199,10 @@ function createOpTableRow(entry, opTbody) {
 
         createStubTable(cacheIRTable, cacheIRTbody, stubTbody, entry);
       };
+    } else {
+      let row = document.createElement("tr");
+      addCellValue(row, "No Stubs Attached.");
+      stubTbody.appendChild(row);
     }
 
     // Add mode to table if mode was recorded.
@@ -248,6 +286,7 @@ function createScriptTableRow(script, scriptTbody) {
         clearOpTable("inline-block");
         clearStubTable("");
         clearCacheIRTable("");
+        clearStubFieldTable("");
       }
 
       createOpTable(context, script, opTable, opTbody);
@@ -392,11 +431,18 @@ function clearCacheIRTable(displayString) {
   cacheIROpTable.style.display = displayString;
 }
 
+function clearStubFieldTable(displayString) {
+  let stubFieldTable = document.getElementById("stubfield-table");
+  stubFieldTable.getElementsByTagName('tbody')[0].innerHTML = "";
+  stubFieldTable.style.display = displayString;
+}
+
 function clearAllTables() {
   clearScriptTable("");
   clearOpTable("");
   clearStubTable("");
   clearCacheIRTable("");
+  clearStubFieldTable("");
 }
 
 document.getElementById("clear").addEventListener("click", function() {
