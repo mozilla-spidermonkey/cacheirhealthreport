@@ -171,12 +171,12 @@ function createOpTableRow(entry, opTbody) {
     // Add column number to table.
     addCellValue(row, entry.column);
 
-    // Add health score to table if stubs exist.
+    // Add health score to table.
+    addCellValue(row, HAPPINESS[health]);
+    
     if (entry.hasOwnProperty('stubs')) {
       let cacheIRTable = document.getElementById("cacheIR-table");
       let cacheIRTbody = cacheIRTable.getElementsByTagName('tbody')[0];
-
-      addCellValue(row, HAPPINESS[health]);
 
       // If stubs exist then add stub table for that row.
       row.onclick = function() {
