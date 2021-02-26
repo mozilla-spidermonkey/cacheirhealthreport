@@ -101,7 +101,7 @@ function createStubFieldTable(stubFields) {
   for (let field of stubFields) {
     let row = document.createElement("tr");
     addCellValue(row, FIELD_TYPE[field.fieldType]);
-    addCellValue(row, field.numStubfieldValues);
+    addCellValue(row, !!field.sawDistinctFieldValues);
     stubFieldTable.getElementsByTagName('tbody')[0].appendChild(row);
   }
 }
