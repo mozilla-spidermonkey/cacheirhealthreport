@@ -1,0 +1,1414 @@
+
+[
+  {
+    "channel": "RateMyCacheIR",
+    "location": {
+      "filename": "mytestcase.js",
+      "line": 1,
+      "column": 13
+    },
+    "spewContext": 2,
+    "op": "GetProp",
+    "lineno": 2,
+    "column": 1,
+    "stubs": [
+      {
+        "cacheIROps": [
+          {
+            "cacheIROp": "GuardToObject",
+            "opHealth": 1
+          },
+          {
+            "cacheIROp": "GuardShape",
+            "opHealth": 1
+          },
+          {
+            "cacheIROp": "LoadFixedSlotResult",
+            "opHealth": 1
+          },
+          {
+            "cacheIROp": "ReturnFromIC",
+            "opHealth": 1
+          }
+        ],
+        "stubHealth": 4,
+        "stubHappiness": 3,
+        "hitCount": 486
+      },
+      {
+        "cacheIROps": [
+          {
+            "cacheIROp": "GuardToObject",
+            "opHealth": 1
+          },
+          {
+            "cacheIROp": "GuardShape",
+            "opHealth": 1
+          },
+          {
+            "cacheIROp": "LoadFixedSlotResult",
+            "opHealth": 1
+          },
+          {
+            "cacheIROp": "ReturnFromIC",
+            "opHealth": 1
+          }
+        ],
+        "stubHealth": 4,
+        "stubHappiness": 3,
+        "hitCount": 243
+      }
+    ],
+    "stubFields": [
+      {
+        "fieldType": 2,
+        "sawDistinctFieldValues": 1
+      },
+      {
+        "fieldType": 0,
+        "sawDistinctFieldValues": 1
+      }
+    ],
+    "entryHappiness": 0,
+    "mode": 0,
+    "fallbackCount": 0
+  },
+  {
+    "channel": "RateMyCacheIR",
+    "location": {
+      "filename": "mytestcase.js",
+      "line": 1,
+      "column": 13
+    },
+    "spewContext": 2,
+    "op": "SetProp",
+    "lineno": 2,
+    "column": 1,
+    "stubs": [
+      {
+        "cacheIROps": [
+          {
+            "cacheIROp": "GuardToObject",
+            "opHealth": 1
+          },
+          {
+            "cacheIROp": "GuardShape",
+            "opHealth": 1
+          },
+          {
+            "cacheIROp": "StoreDynamicSlot",
+            "opHealth": 6
+          },
+          {
+            "cacheIROp": "ReturnFromIC",
+            "opHealth": 1
+          }
+        ],
+        "stubHealth": 9,
+        "stubHappiness": 3,
+        "hitCount": 486
+      },
+      {
+        "cacheIROps": [
+          {
+            "cacheIROp": "GuardToObject",
+            "opHealth": 1
+          },
+          {
+            "cacheIROp": "GuardShape",
+            "opHealth": 1
+          },
+          {
+            "cacheIROp": "StoreFixedSlot",
+            "opHealth": 6
+          },
+          {
+            "cacheIROp": "ReturnFromIC",
+            "opHealth": 1
+          }
+        ],
+        "stubHealth": 9,
+        "stubHappiness": 3,
+        "hitCount": 243
+      }
+    ],
+    "entryHappiness": 0,
+    "mode": 0,
+    "fallbackCount": 0
+  },
+  {
+    "channel": "RateMyCacheIR",
+    "location": {
+      "filename": "mytestcase.js",
+      "line": 1,
+      "column": 13
+    },
+    "spewContext": 2,
+    "op": "GetProp",
+    "lineno": 3,
+    "column": 1,
+    "stubs": [
+      {
+        "cacheIROps": [
+          {
+            "cacheIROp": "GuardToObject",
+            "opHealth": 1
+          },
+          {
+            "cacheIROp": "GuardShape",
+            "opHealth": 1
+          },
+          {
+            "cacheIROp": "LoadDynamicSlotResult",
+            "opHealth": 1
+          },
+          {
+            "cacheIROp": "ReturnFromIC",
+            "opHealth": 1
+          }
+        ],
+        "stubHealth": 4,
+        "stubHappiness": 3,
+        "hitCount": 486
+      },
+      {
+        "cacheIROps": [
+          {
+            "cacheIROp": "GuardToObject",
+            "opHealth": 1
+          },
+          {
+            "cacheIROp": "GuardShape",
+            "opHealth": 1
+          },
+          {
+            "cacheIROp": "LoadFixedSlotResult",
+            "opHealth": 1
+          },
+          {
+            "cacheIROp": "ReturnFromIC",
+            "opHealth": 1
+          }
+        ],
+        "stubHealth": 4,
+        "stubHappiness": 3,
+        "hitCount": 243
+      }
+    ],
+    "entryHappiness": 0,
+    "mode": 0,
+    "fallbackCount": 0
+  },
+  {
+    "channel": "RateMyCacheIR",
+    "location": {
+      "filename": "mytestcase.js",
+      "line": 1,
+      "column": 13
+    },
+    "spewContext": 2,
+    "op": "SetProp",
+    "lineno": 3,
+    "column": 1,
+    "stubs": [
+      {
+        "cacheIROps": [
+          {
+            "cacheIROp": "GuardToObject",
+            "opHealth": 1
+          },
+          {
+            "cacheIROp": "GuardShape",
+            "opHealth": 1
+          },
+          {
+            "cacheIROp": "StoreFixedSlot",
+            "opHealth": 6
+          },
+          {
+            "cacheIROp": "ReturnFromIC",
+            "opHealth": 1
+          }
+        ],
+        "stubHealth": 9,
+        "stubHappiness": 3,
+        "hitCount": 486
+      },
+      {
+        "cacheIROps": [
+          {
+            "cacheIROp": "GuardToObject",
+            "opHealth": 1
+          },
+          {
+            "cacheIROp": "GuardShape",
+            "opHealth": 1
+          },
+          {
+            "cacheIROp": "StoreFixedSlot",
+            "opHealth": 6
+          },
+          {
+            "cacheIROp": "ReturnFromIC",
+            "opHealth": 1
+          }
+        ],
+        "stubHealth": 9,
+        "stubHappiness": 3,
+        "hitCount": 243
+      }
+    ],
+    "stubFields": [
+      {
+        "fieldType": 2,
+        "sawDistinctFieldValues": 1
+      },
+      {
+        "fieldType": 0,
+        "sawDistinctFieldValues": 1
+      }
+    ],
+    "entryHappiness": 0,
+    "mode": 0,
+    "fallbackCount": 0
+  },
+  {
+    "channel": "RateMyCacheIR",
+    "location": {
+      "filename": "mytestcase.js",
+      "line": 1,
+      "column": 13
+    },
+    "spewContext": 2,
+    "op": "GetProp",
+    "lineno": 4,
+    "column": 1,
+    "stubs": [
+      {
+        "cacheIROps": [
+          {
+            "cacheIROp": "GuardToObject",
+            "opHealth": 1
+          },
+          {
+            "cacheIROp": "GuardShape",
+            "opHealth": 1
+          },
+          {
+            "cacheIROp": "LoadFixedSlotResult",
+            "opHealth": 1
+          },
+          {
+            "cacheIROp": "ReturnFromIC",
+            "opHealth": 1
+          }
+        ],
+        "stubHealth": 4,
+        "stubHappiness": 3,
+        "hitCount": 486
+      },
+      {
+        "cacheIROps": [
+          {
+            "cacheIROp": "GuardToObject",
+            "opHealth": 1
+          },
+          {
+            "cacheIROp": "GuardShape",
+            "opHealth": 1
+          },
+          {
+            "cacheIROp": "LoadFixedSlotResult",
+            "opHealth": 1
+          },
+          {
+            "cacheIROp": "ReturnFromIC",
+            "opHealth": 1
+          }
+        ],
+        "stubHealth": 4,
+        "stubHappiness": 3,
+        "hitCount": 243
+      }
+    ],
+    "stubFields": [
+      {
+        "fieldType": 2,
+        "sawDistinctFieldValues": 1
+      },
+      {
+        "fieldType": 0,
+        "sawDistinctFieldValues": 1
+      }
+    ],
+    "entryHappiness": 0,
+    "mode": 0,
+    "fallbackCount": 0
+  },
+  {
+    "channel": "RateMyCacheIR",
+    "location": {
+      "filename": "mytestcase.js",
+      "line": 1,
+      "column": 13
+    },
+    "spewContext": 2,
+    "op": "SetProp",
+    "lineno": 4,
+    "column": 1,
+    "stubs": [
+      {
+        "cacheIROps": [
+          {
+            "cacheIROp": "GuardToObject",
+            "opHealth": 1
+          },
+          {
+            "cacheIROp": "GuardShape",
+            "opHealth": 1
+          },
+          {
+            "cacheIROp": "StoreFixedSlot",
+            "opHealth": 6
+          },
+          {
+            "cacheIROp": "ReturnFromIC",
+            "opHealth": 1
+          }
+        ],
+        "stubHealth": 9,
+        "stubHappiness": 3,
+        "hitCount": 486
+      },
+      {
+        "cacheIROps": [
+          {
+            "cacheIROp": "GuardToObject",
+            "opHealth": 1
+          },
+          {
+            "cacheIROp": "GuardShape",
+            "opHealth": 1
+          },
+          {
+            "cacheIROp": "StoreFixedSlot",
+            "opHealth": 6
+          },
+          {
+            "cacheIROp": "ReturnFromIC",
+            "opHealth": 1
+          }
+        ],
+        "stubHealth": 9,
+        "stubHappiness": 3,
+        "hitCount": 243
+      }
+    ],
+    "stubFields": [
+      {
+        "fieldType": 2,
+        "sawDistinctFieldValues": 1
+      },
+      {
+        "fieldType": 0,
+        "sawDistinctFieldValues": 1
+      }
+    ],
+    "entryHappiness": 0,
+    "mode": 0,
+    "fallbackCount": 0
+  },
+  {
+    "channel": "RateMyCacheIR",
+    "location": {
+      "filename": "mytestcase.js",
+      "line": 1,
+      "column": 13
+    },
+    "spewContext": 0,
+    "entries": [
+      {
+        "op": "GetProp",
+        "lineno": 2,
+        "column": 1,
+        "stubs": [
+          {
+            "cacheIROps": [
+              {
+                "cacheIROp": "GuardToObject",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "GuardShape",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "LoadFixedSlotResult",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "ReturnFromIC",
+                "opHealth": 1
+              }
+            ],
+            "stubHealth": 4,
+            "stubHappiness": 3,
+            "hitCount": 980
+          },
+          {
+            "cacheIROps": [
+              {
+                "cacheIROp": "GuardToObject",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "GuardShape",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "LoadFixedSlotResult",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "ReturnFromIC",
+                "opHealth": 1
+              }
+            ],
+            "stubHealth": 4,
+            "stubHappiness": 3,
+            "hitCount": 490
+          }
+        ],
+        "stubFields": [
+          {
+            "fieldType": 2,
+            "sawDistinctFieldValues": 1
+          },
+          {
+            "fieldType": 0,
+            "sawDistinctFieldValues": 1
+          }
+        ],
+        "entryHappiness": 0,
+        "mode": 0,
+        "fallbackCount": 0
+      },
+      {
+        "op": "SetProp",
+        "lineno": 2,
+        "column": 1,
+        "stubs": [
+          {
+            "cacheIROps": [
+              {
+                "cacheIROp": "GuardToObject",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "GuardShape",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "StoreDynamicSlot",
+                "opHealth": 6
+              },
+              {
+                "cacheIROp": "ReturnFromIC",
+                "opHealth": 1
+              }
+            ],
+            "stubHealth": 9,
+            "stubHappiness": 3,
+            "hitCount": 980
+          },
+          {
+            "cacheIROps": [
+              {
+                "cacheIROp": "GuardToObject",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "GuardShape",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "StoreFixedSlot",
+                "opHealth": 6
+              },
+              {
+                "cacheIROp": "ReturnFromIC",
+                "opHealth": 1
+              }
+            ],
+            "stubHealth": 9,
+            "stubHappiness": 3,
+            "hitCount": 490
+          }
+        ],
+        "entryHappiness": 0,
+        "mode": 0,
+        "fallbackCount": 0
+      },
+      {
+        "op": "GetProp",
+        "lineno": 3,
+        "column": 1,
+        "stubs": [
+          {
+            "cacheIROps": [
+              {
+                "cacheIROp": "GuardToObject",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "GuardShape",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "LoadDynamicSlotResult",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "ReturnFromIC",
+                "opHealth": 1
+              }
+            ],
+            "stubHealth": 4,
+            "stubHappiness": 3,
+            "hitCount": 980
+          },
+          {
+            "cacheIROps": [
+              {
+                "cacheIROp": "GuardToObject",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "GuardShape",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "LoadFixedSlotResult",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "ReturnFromIC",
+                "opHealth": 1
+              }
+            ],
+            "stubHealth": 4,
+            "stubHappiness": 3,
+            "hitCount": 490
+          }
+        ],
+        "entryHappiness": 0,
+        "mode": 0,
+        "fallbackCount": 0
+      },
+      {
+        "op": "SetProp",
+        "lineno": 3,
+        "column": 1,
+        "stubs": [
+          {
+            "cacheIROps": [
+              {
+                "cacheIROp": "GuardToObject",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "GuardShape",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "StoreFixedSlot",
+                "opHealth": 6
+              },
+              {
+                "cacheIROp": "ReturnFromIC",
+                "opHealth": 1
+              }
+            ],
+            "stubHealth": 9,
+            "stubHappiness": 3,
+            "hitCount": 980
+          },
+          {
+            "cacheIROps": [
+              {
+                "cacheIROp": "GuardToObject",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "GuardShape",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "StoreFixedSlot",
+                "opHealth": 6
+              },
+              {
+                "cacheIROp": "ReturnFromIC",
+                "opHealth": 1
+              }
+            ],
+            "stubHealth": 9,
+            "stubHappiness": 3,
+            "hitCount": 490
+          }
+        ],
+        "stubFields": [
+          {
+            "fieldType": 2,
+            "sawDistinctFieldValues": 1
+          },
+          {
+            "fieldType": 0,
+            "sawDistinctFieldValues": 1
+          }
+        ],
+        "entryHappiness": 0,
+        "mode": 0,
+        "fallbackCount": 0
+      },
+      {
+        "op": "GetProp",
+        "lineno": 4,
+        "column": 1,
+        "stubs": [
+          {
+            "cacheIROps": [
+              {
+                "cacheIROp": "GuardToObject",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "GuardShape",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "LoadFixedSlotResult",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "ReturnFromIC",
+                "opHealth": 1
+              }
+            ],
+            "stubHealth": 4,
+            "stubHappiness": 3,
+            "hitCount": 980
+          },
+          {
+            "cacheIROps": [
+              {
+                "cacheIROp": "GuardToObject",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "GuardShape",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "LoadFixedSlotResult",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "ReturnFromIC",
+                "opHealth": 1
+              }
+            ],
+            "stubHealth": 4,
+            "stubHappiness": 3,
+            "hitCount": 490
+          }
+        ],
+        "stubFields": [
+          {
+            "fieldType": 2,
+            "sawDistinctFieldValues": 1
+          },
+          {
+            "fieldType": 0,
+            "sawDistinctFieldValues": 1
+          }
+        ],
+        "entryHappiness": 0,
+        "mode": 0,
+        "fallbackCount": 0
+      },
+      {
+        "op": "SetProp",
+        "lineno": 4,
+        "column": 1,
+        "stubs": [
+          {
+            "cacheIROps": [
+              {
+                "cacheIROp": "GuardToObject",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "GuardShape",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "StoreFixedSlot",
+                "opHealth": 6
+              },
+              {
+                "cacheIROp": "ReturnFromIC",
+                "opHealth": 1
+              }
+            ],
+            "stubHealth": 9,
+            "stubHappiness": 3,
+            "hitCount": 980
+          },
+          {
+            "cacheIROps": [
+              {
+                "cacheIROp": "GuardToObject",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "GuardShape",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "StoreFixedSlot",
+                "opHealth": 6
+              },
+              {
+                "cacheIROp": "ReturnFromIC",
+                "opHealth": 1
+              }
+            ],
+            "stubHealth": 9,
+            "stubHappiness": 3,
+            "hitCount": 490
+          }
+        ],
+        "stubFields": [
+          {
+            "fieldType": 2,
+            "sawDistinctFieldValues": 1
+          },
+          {
+            "fieldType": 0,
+            "sawDistinctFieldValues": 1
+          }
+        ],
+        "entryHappiness": 0,
+        "mode": 0,
+        "fallbackCount": 0
+      }
+    ],
+    "scriptHappiness": 0
+  },
+  {
+    "channel": "RateMyCacheIR",
+    "location": {
+      "filename": "mytestcase.js",
+      "line": 1,
+      "column": 0
+    },
+    "spewContext": 0,
+    "entries": [
+      {
+        "op": "BindGName",
+        "lineno": 8,
+        "column": 0,
+        "entryHappiness": 3,
+        "mode": 0,
+        "fallbackCount": 0
+      },
+      {
+        "op": "SetGName",
+        "lineno": 8,
+        "column": 11,
+        "entryHappiness": 3,
+        "mode": 0,
+        "fallbackCount": 0
+      },
+      {
+        "op": "BindGName",
+        "lineno": 9,
+        "column": 0,
+        "entryHappiness": 3,
+        "mode": 0,
+        "fallbackCount": 0
+      },
+      {
+        "op": "SetGName",
+        "lineno": 9,
+        "column": 11,
+        "entryHappiness": 3,
+        "mode": 0,
+        "fallbackCount": 0
+      },
+      {
+        "op": "BindGName",
+        "lineno": 12,
+        "column": 5,
+        "entryHappiness": 3,
+        "mode": 0,
+        "fallbackCount": 0
+      },
+      {
+        "op": "SetGName",
+        "lineno": 12,
+        "column": 5,
+        "entryHappiness": 3,
+        "mode": 0,
+        "fallbackCount": 0
+      },
+      {
+        "op": "GetGName",
+        "lineno": 12,
+        "column": 12,
+        "stubs": [
+          {
+            "cacheIROps": [
+              {
+                "cacheIROp": "GuardShape",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "LoadEnclosingEnvironment",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "GuardShape",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "LoadDynamicSlotResult",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "ReturnFromIC",
+                "opHealth": 1
+              }
+            ],
+            "stubHealth": 5,
+            "stubHappiness": 3,
+            "hitCount": 36927
+          }
+        ],
+        "entryHappiness": 3,
+        "mode": 0,
+        "fallbackCount": 0
+      },
+      {
+        "op": "Lt",
+        "lineno": 12,
+        "column": 12,
+        "stubs": [
+          {
+            "cacheIROps": [
+              {
+                "cacheIROp": "GuardToInt32",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "GuardToInt32",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "CompareInt32Result",
+                "opHealth": 2
+              },
+              {
+                "cacheIROp": "ReturnFromIC",
+                "opHealth": 1
+              }
+            ],
+            "stubHealth": 5,
+            "stubHappiness": 3,
+            "hitCount": 36927
+          }
+        ],
+        "entryHappiness": 3,
+        "mode": 0,
+        "fallbackCount": 0
+      },
+      {
+        "op": "JumpIfFalse",
+        "lineno": 12,
+        "column": 12,
+        "entryHappiness": 3,
+        "mode": 0,
+        "fallbackCount": 0
+      },
+      {
+        "op": "GetGName",
+        "lineno": 13,
+        "column": 1,
+        "stubs": [
+          {
+            "cacheIROps": [
+              {
+                "cacheIROp": "GuardShape",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "LoadEnclosingEnvironment",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "GuardShape",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "LoadDynamicSlotResult",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "ReturnFromIC",
+                "opHealth": 1
+              }
+            ],
+            "stubHealth": 5,
+            "stubHappiness": 3,
+            "hitCount": 36927
+          }
+        ],
+        "entryHappiness": 3,
+        "mode": 0,
+        "fallbackCount": 0
+      },
+      {
+        "op": "GetGName",
+        "lineno": 13,
+        "column": 1,
+        "stubs": [
+          {
+            "cacheIROps": [
+              {
+                "cacheIROp": "GuardShape",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "LoadEnclosingEnvironment",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "GuardShape",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "LoadDynamicSlotResult",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "ReturnFromIC",
+                "opHealth": 1
+              }
+            ],
+            "stubHealth": 5,
+            "stubHappiness": 3,
+            "hitCount": 36927
+          }
+        ],
+        "entryHappiness": 3,
+        "mode": 0,
+        "fallbackCount": 0
+      },
+      {
+        "op": "CallIgnoresRv",
+        "lineno": 13,
+        "column": 4,
+        "stubs": [
+          {
+            "cacheIROps": [
+              {
+                "cacheIROp": "LoadArgumentDynamicSlot",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "GuardToObject",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "GuardSpecificFunction",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "CallInlinedFunction",
+                "opHealth": 4
+              },
+              {
+                "cacheIROp": "ReturnFromIC",
+                "opHealth": 1
+              }
+            ],
+            "stubHealth": 8,
+            "stubHappiness": 3,
+            "hitCount": 36441
+          }
+        ],
+        "entryHappiness": 3,
+        "mode": 0,
+        "fallbackCount": 0
+      },
+      {
+        "op": "GetGName",
+        "lineno": 14,
+        "column": 1,
+        "stubs": [
+          {
+            "cacheIROps": [
+              {
+                "cacheIROp": "GuardShape",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "LoadEnclosingEnvironment",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "GuardShape",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "LoadDynamicSlotResult",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "ReturnFromIC",
+                "opHealth": 1
+              }
+            ],
+            "stubHealth": 5,
+            "stubHappiness": 3,
+            "hitCount": 36927
+          }
+        ],
+        "entryHappiness": 3,
+        "mode": 0,
+        "fallbackCount": 0
+      },
+      {
+        "op": "GetGName",
+        "lineno": 14,
+        "column": 1,
+        "stubs": [
+          {
+            "cacheIROps": [
+              {
+                "cacheIROp": "GuardShape",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "LoadEnclosingEnvironment",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "GuardShape",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "LoadDynamicSlotResult",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "ReturnFromIC",
+                "opHealth": 1
+              }
+            ],
+            "stubHealth": 5,
+            "stubHappiness": 3,
+            "hitCount": 36927
+          }
+        ],
+        "entryHappiness": 3,
+        "mode": 0,
+        "fallbackCount": 0
+      },
+      {
+        "op": "CallIgnoresRv",
+        "lineno": 14,
+        "column": 4,
+        "stubs": [
+          {
+            "cacheIROps": [
+              {
+                "cacheIROp": "LoadArgumentDynamicSlot",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "GuardToObject",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "GuardSpecificFunction",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "CallInlinedFunction",
+                "opHealth": 4
+              },
+              {
+                "cacheIROp": "ReturnFromIC",
+                "opHealth": 1
+              }
+            ],
+            "stubHealth": 8,
+            "stubHappiness": 3,
+            "hitCount": 36441
+          }
+        ],
+        "entryHappiness": 3,
+        "mode": 0,
+        "fallbackCount": 0
+      },
+      {
+        "op": "BindGName",
+        "lineno": 12,
+        "column": 23,
+        "stubs": [
+          {
+            "cacheIROps": [
+              {
+                "cacheIROp": "LoadEnclosingEnvironment",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "LoadObjectResult",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "ReturnFromIC",
+                "opHealth": 1
+              }
+            ],
+            "stubHealth": 3,
+            "stubHappiness": 3,
+            "hitCount": 88
+          }
+        ],
+        "entryHappiness": 3,
+        "mode": 0,
+        "fallbackCount": 0
+      },
+      {
+        "op": "GetGName",
+        "lineno": 12,
+        "column": 23,
+        "stubs": [
+          {
+            "cacheIROps": [
+              {
+                "cacheIROp": "GuardShape",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "LoadEnclosingEnvironment",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "GuardShape",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "LoadDynamicSlotResult",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "ReturnFromIC",
+                "opHealth": 1
+              }
+            ],
+            "stubHealth": 5,
+            "stubHappiness": 3,
+            "hitCount": 36927
+          }
+        ],
+        "entryHappiness": 3,
+        "mode": 0,
+        "fallbackCount": 0
+      },
+      {
+        "op": "ToNumeric",
+        "lineno": 12,
+        "column": 23,
+        "stubs": [
+          {
+            "cacheIROps": [
+              {
+                "cacheIROp": "GuardToInt32",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "LoadInt32Result",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "ReturnFromIC",
+                "opHealth": 1
+              }
+            ],
+            "stubHealth": 3,
+            "stubHappiness": 3,
+            "hitCount": 36927
+          }
+        ],
+        "entryHappiness": 3,
+        "mode": 0,
+        "fallbackCount": 0
+      },
+      {
+        "op": "Inc",
+        "lineno": 12,
+        "column": 23,
+        "stubs": [
+          {
+            "cacheIROps": [
+              {
+                "cacheIROp": "GuardToInt32",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "Int32IncResult",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "ReturnFromIC",
+                "opHealth": 1
+              }
+            ],
+            "stubHealth": 3,
+            "stubHappiness": 3,
+            "hitCount": 36927
+          }
+        ],
+        "entryHappiness": 3,
+        "mode": 0,
+        "fallbackCount": 0
+      },
+      {
+        "op": "SetGName",
+        "lineno": 12,
+        "column": 23,
+        "stubs": [
+          {
+            "cacheIROps": [
+              {
+                "cacheIROp": "GuardToObject",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "GuardShape",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "StoreDynamicSlot",
+                "opHealth": 6
+              },
+              {
+                "cacheIROp": "ReturnFromIC",
+                "opHealth": 1
+              }
+            ],
+            "stubHealth": 9,
+            "stubHappiness": 3,
+            "hitCount": 36927
+          }
+        ],
+        "entryHappiness": 3,
+        "mode": 0,
+        "fallbackCount": 0
+      },
+      {
+        "op": "GetGName",
+        "lineno": 17,
+        "column": 0,
+        "stubs": [
+          {
+            "cacheIROps": [
+              {
+                "cacheIROp": "GuardShape",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "LoadEnclosingEnvironment",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "GuardShape",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "LoadDynamicSlotResult",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "ReturnFromIC",
+                "opHealth": 1
+              }
+            ],
+            "stubHealth": 5,
+            "stubHappiness": 3,
+            "hitCount": 0
+          }
+        ],
+        "entryHappiness": 3,
+        "mode": 0,
+        "fallbackCount": 0
+      },
+      {
+        "op": "CallIgnoresRv",
+        "lineno": 17,
+        "column": 0,
+        "stubs": [
+          {
+            "cacheIROps": [
+              {
+                "cacheIROp": "LoadArgumentDynamicSlot",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "GuardToObject",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "GuardSpecificFunction",
+                "opHealth": 1
+              },
+              {
+                "cacheIROp": "CallNativeFunction",
+                "opHealth": 4
+              },
+              {
+                "cacheIROp": "ReturnFromIC",
+                "opHealth": 1
+              }
+            ],
+            "stubHealth": 8,
+            "stubHappiness": 3,
+            "hitCount": 0
+          }
+        ],
+        "entryHappiness": 3,
+        "mode": 0,
+        "fallbackCount": 0
+      }
+    ],
+    "scriptHappiness": 3
+  },
+  {
+    "channel": "RateMyCacheIR",
+    "filename": "mytestcase.js",
+    "line": 1,
+    "column": 13,
+    "finalWarmUpCount": 993
+  },
+  {
+    "channel": "RateMyCacheIR",
+    "filename": "mytestcase.js",
+    "line": 1,
+    "column": 0,
+    "finalWarmUpCount": 36941
+  }
+]
