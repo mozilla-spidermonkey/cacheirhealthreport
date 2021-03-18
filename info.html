@@ -25,7 +25,7 @@
          <li>There are four ways to generate a CacheIR Health Report:</li>
          <ul> 
             <li>Build and run the browser with the two aforementioned evironment and mozconfig 
-            options.</li>
+            options. <b>note: for this option you must set security.sandbox.content.level to 1 in about:config</b></li>
             <div class="example"><code>SPEW=RateMyCacheIR ./mach run</code></div>
             <li>Running a JS program will produce a health report.</li>
             <div class="example"><code>SPEW=RateMyCacheIR dist/bin/js jsprogram.js</code></div>
