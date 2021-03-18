@@ -124,31 +124,37 @@ function createCacheIRTable(cacheIRTbody, stub) {
 
 // Create table for displaying stub chain for the selected JS_OP.
 function createStubTable(cacheIRTable, cacheIRTbody, stubTbody, entry) {
-  for (let stub of entry.stubs) {
+  if (entry.hasOwnProperty('stubs')) {
+    for (let stub of entry.stubs) {
+      let row = document.createElement("tr");
+
+      addCellValue(row, stub.stubHealth);
+      addCellValue(row, stub.hitCount);
+
+      row.onclick = function() {
+        // Highlight selected stub row.
+        highlightSelectedStub(stubTbody, row);
+
+        if (cacheIRTable.style.display === "") {
+          cacheIRTable.style.display = "inline-block";
+        } else {
+          clearCacheIRTable("inline-block");
+        }
+
+        createCacheIRTable(cacheIRTbody, stub);
+
+        if (entry.hasOwnProperty('stubFields')) {
+          createStubFieldTable(entry.stubFields);
+        } else {
+          clearStubFieldTable("");
+        }
+      };
+
+      stubTbody.appendChild(row);
+    }
+  } else {
     let row = document.createElement("tr");
-
-    addCellValue(row, stub.stubHealth);
-    addCellValue(row, stub.hitCount);
-
-    row.onclick = function() {
-      // Highlight selected stub row.
-      highlightSelectedStub(stubTbody, row);
-
-      if (cacheIRTable.style.display === "") {
-        cacheIRTable.style.display = "inline-block";
-      } else {
-        clearCacheIRTable("inline-block");
-      }
-
-      createCacheIRTable(cacheIRTbody, stub);
-
-      if (entry.hasOwnProperty('stubFields')) {
-        createStubFieldTable(entry.stubFields);
-      } else {
-        clearStubFieldTable("");
-      }
-    };
-
+    addCellValue(row, "No Stubs Attached.");
     stubTbody.appendChild(row);
   }
 }
@@ -174,36 +180,30 @@ function createOpTableRow(entry, opTbody) {
     // Add health score to table.
     addCellValue(row, HAPPINESS[health]);
     
-    if (entry.hasOwnProperty('stubs')) {
-      let cacheIRTable = document.getElementById("cacheIR-table");
-      let cacheIRTbody = cacheIRTable.getElementsByTagName('tbody')[0];
+    let cacheIRTable = document.getElementById("cacheIR-table");
+    let cacheIRTbody = cacheIRTable.getElementsByTagName('tbody')[0];
 
-      // If stubs exist then add stub table for that row.
-      row.onclick = function() {
-        // Highlight selected JS_OP row.
-        highlightSelectedJSOp(opTbody, row);
+    // If stubs exist then add stub table for that row.
+    row.onclick = function() {
+      // Highlight selected JS_OP row.
+      highlightSelectedJSOp(opTbody, row);
 
-        if (stubTable.style.display === "") {
-          stubTable.style.display = "inline-block";
-        } else {
-          // When selecting a new JS_Op we must clear all previously 
-          // created tables.
-          clearStubTable("inline-block");
-          clearCacheIRTable("");
-          clearStubFieldTable("");
-        }
+      if (stubTable.style.display === "") {
+        stubTable.style.display = "inline-block";
+      } else {
+        // When selecting a new JS_Op we must clear all previously 
+        // created tables.
+        clearStubTable("inline-block");
+        clearCacheIRTable("");
+        clearStubFieldTable("");
+      }
 
-        // For the display of the selected JS_Op.
-        let jsOp = document.getElementById("jsOp-id");
-        jsOp.textContent = entry.op;
+      // For the display of the selected JS_Op.
+      let jsOp = document.getElementById("jsOp-id");
+      jsOp.textContent = entry.op;
 
-        createStubTable(cacheIRTable, cacheIRTbody, stubTbody, entry);
-      };
-    } else {
-      let row = document.createElement("tr");
-      addCellValue(row, "No Stubs Attached.");
-      stubTbody.appendChild(row);
-    }
+      createStubTable(cacheIRTable, cacheIRTbody, stubTbody, entry);
+    };
 
     // Add mode to table if mode was recorded.
     if (entry.hasOwnProperty('mode')) {
