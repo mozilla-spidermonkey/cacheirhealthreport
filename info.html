@@ -2,7 +2,7 @@
 <html lang="en">
    <head>
       <meta charset="utf-8">
-      <title>CacheIR Health Report</title>
+      <title>Cache IR Health Report</title>
       <meta name="" content="CacheIR Health Report Help and Information">
       <link rel="stylesheet" href="styles-info.css">
    </head>
@@ -19,20 +19,20 @@
       <p>
       <ol> 
          <li><a href="https://firefox-source-docs.mozilla.org/js/build.html"> Build SpiderMonkey's JavaScript shell</a>.</li>
-         <li>Use environment variable: SPEW=RateMyCacheIR.</li>
+         <li>Use environment variable: SPEW=CacheIRHealthReport.</li>
          <li>The SPEW environment variable is not used in optimized browser builds, in order to enable this in optimized browser builds add the below to your mozconfig to support CacheIR Health Report:</li>
          <div class="example"><code>ac_add_options --enable-jitspew</code></div>
          <li>There are four ways to generate a CacheIR Health Report:</li>
          <ul> 
             <li>Build and run the browser with the two aforementioned evironment and mozconfig 
             options. <b>note: for this option you must set security.sandbox.content.level to 1 in about:config</b></li>
-            <div class="example"><code>SPEW=RateMyCacheIR ./mach run</code></div>
+            <div class="example"><code>SPEW=CacheIRHealthReport ./mach run</code></div>
             <li>Running a JS program will produce a health report.</li>
-            <div class="example"><code>SPEW=RateMyCacheIR dist/bin/js jsprogram.js</code></div>
-            <li>In the shell you can call rateMyCacheIR() and a report will be generated for all scripts in the current zone.</li>
-            <div class="example"><code>rateMyCacheIR()</code></div>
-            <li>You may also call rateMyCacheIR() on a particular function to see the health report associated with that function's script.</li>
-            <div class="example"><code>rateMyCacheIR(foo)</code></div>
+            <div class="example"><code>SPEW=CacheIRHealthReport dist/bin/js jsprogram.js</code></div>
+            <li>In the shell you can call cacheIRHealthReport() and a report will be generated for all scripts in the current zone.</li>
+            <div class="example"><code>cacheIRHealthReport()</code></div>
+            <li>You may also call cacheIRHealthReport() on a particular function to see the health report associated with that function's script.</li>
+            <div class="example"><code>cacheIRHealthReport(foo)</code></div>
          </ul>
          <li>The health report will be named "spew_output.[PID].0", unless otherwise specified, and will be in the same directory you ran the browser or shell from.</li>
          <li>Go to <a href="https://carolinecullen.github.io/cacheirhealthreport/">CacheIR Health Report</a> and input the file from the previous step into the tool.</li>
@@ -63,7 +63,7 @@
       <p>
       There are a few ways contexts that we spew health reports:
       <ol>
-         <li>Shell - The rateMyCacheIR shell function was called.</li>
+         <li>Shell - The cacheIRHealthReport shell function was called.</li>
          <li>Transition - The inline cache transitioned into either megamorphic or generic mode.</li>
          <li>Trial Inlining - The trial inlining hit count threshold of 500 was reached.</li>
       </ol>
