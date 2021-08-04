@@ -88,6 +88,37 @@ function addCellValue(row, value) {
   cell.appendChild(text);
 }
 
+// Create table for displaying shape information.
+function createShapeInfoTable(shapes) {
+  let shapeInfoTable = document.getElementById("shapeinfo-table");
+
+  if (shapeInfoTable.style.display === "") {
+    shapeInfoTable.style.display = "inline-block";
+  } else {
+    clearShapeInfoTable("inline-block");
+  }
+  
+  for (let shape of shapes) {
+    let row = document.createElement("tr");
+    if (shape.hasOwnProperty('firstProperty')) {
+      addCellValue(row, shape.firstProperty);
+    } else {
+      addCellValue(row, "No key property.");
+    }
+    if (shape.hasOwnProperty('lastProperty')) {
+      addCellValue(row, shape.lastProperty);
+    } else {
+      addCellValue(row, "No key property.");
+    }
+    if (shape.hasOwnProperty('totalKeys')) {
+      addCellValue(row, shape.totalKeys);
+    } else {
+      addCellValue(row, "0");
+    }
+    shapeInfoTable.getElementsByTagName('tbody')[0].appendChild(row);
+  }
+}
+
 // Create table for displaying stub field information.
 function createStubFieldTable(stubFields) {
   let stubFieldTable = document.getElementById("stubfield-table");
@@ -143,6 +174,12 @@ function createStubTable(cacheIRTable, cacheIRTbody, stubTbody, entry) {
 
         createCacheIRTable(cacheIRTbody, stub);
 
+        if (stub.hasOwnProperty('shapes')) {
+          createShapeInfoTable(stub.shapes);
+        } else {
+          clearShapeInfoTable("");
+        }
+
         if (entry.hasOwnProperty('stubFields')) {
           createStubFieldTable(entry.stubFields);
         } else {
@@ -195,6 +232,7 @@ function createOpTableRow(entry, opTbody) {
         // created tables.
         clearStubTable("inline-block");
         clearCacheIRTable("");
+        clearShapeInfoTable("");
         clearStubFieldTable("");
       }
 
@@ -286,6 +324,7 @@ function createScriptTableRow(script, scriptTbody) {
         clearOpTable("inline-block");
         clearStubTable("");
         clearCacheIRTable("");
+        clearShapeInfoTable("");
         clearStubFieldTable("");
       }
 
@@ -300,10 +339,9 @@ function createScriptTableRow(script, scriptTbody) {
 // Add final warm up count to script table.
 function insertFinalWarmUpCountIntoTable(script, scriptTbody) {
   for (let row = 0; row < scriptTbody.rows.length; row++) {
-    let filename = scriptTbody.rows[row].cells[SCRIPT_NAME_COLUMN].innerHTML;
+    let filename = scriptTbody.rows[row].cells[SCRIPT_NAME_COLUMN].textContent;
     let lineno = scriptTbody.rows[row].cells[SCRIPT_LINE_COLUMN].innerHTML;
     let column = scriptTbody.rows[row].cells[SCRIPT_COLUMN_COLUMN].innerHTML;
-
     if (filename == script.filename && lineno == script.line && 
         column == script.column) {
       scriptTbody.rows[row].cells[SCRIPT_HIT_COUNT_COLUMN].innerHTML = parseFloat(script.finalWarmUpCount);
@@ -431,6 +469,12 @@ function clearCacheIRTable(displayString) {
   cacheIROpTable.style.display = displayString;
 }
 
+function clearShapeInfoTable(displayString) {
+  let shapeInfoTable = document.getElementById("shapeinfo-table");
+  shapeInfoTable.getElementsByTagName('tbody')[0].innerHTML = "";
+  shapeInfoTable.style.display = displayString;
+}
+
 function clearStubFieldTable(displayString) {
   let stubFieldTable = document.getElementById("stubfield-table");
   stubFieldTable.getElementsByTagName('tbody')[0].innerHTML = "";
@@ -442,6 +486,7 @@ function clearAllTables() {
   clearOpTable("");
   clearStubTable("");
   clearCacheIRTable("");
+  clearShapeInfoTable("");
   clearStubFieldTable("");
 }
 
