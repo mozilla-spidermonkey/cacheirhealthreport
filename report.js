@@ -100,11 +100,6 @@ function createShapeInfoTable(shapes) {
   
   for (let shape of shapes) {
     let row = document.createElement("tr");
-    if (shape.hasOwnProperty('firstProperty')) {
-      addCellValue(row, shape.firstProperty);
-    } else {
-      addCellValue(row, "No key property.");
-    }
     if (shape.hasOwnProperty('lastProperty')) {
       addCellValue(row, shape.lastProperty);
     } else {
