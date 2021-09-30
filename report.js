@@ -110,6 +110,16 @@ function createShapeInfoTable(shapes) {
     } else {
       addCellValue(row, "0");
     }
+    if (shape.hasOwnProperty('shapeAllocSite')) {
+      let shapeAlloc = shape.shapeAllocSite;
+      addCellValue(row, shapeAlloc.filename);
+      addCellValue(row, shapeAlloc.line);
+      addCellValue(row, shapeAlloc.column);
+    } else {
+      addCellValue(row, "No shape allocation site.");
+      addCellValue(row, "No shape allocation site.");
+      addCellValue(row, "No shape allocation site.");
+    }
     shapeInfoTable.getElementsByTagName('tbody')[0].appendChild(row);
   }
 }
