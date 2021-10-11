@@ -20,13 +20,20 @@
             <input class="button" id="clear" type="reset" value="CLEAR">
          </form>
       </div>
-      <select class="button filter" id="happiness-filter">
-        <option id="clear-filter">HAPPINESS FILTER: 🚫</option>
-        <option id="sad">HAPPINESS FILTER: 🤬</option>
-        <option id="medium-sad">HAPPINESS FILTER: ☹️</option>
-        <option id="medium-happy">HAPPINESS FILTER: 😐</option>
-        <option id="happy">HAPPINESS FILTER: 😀</option>
-      </select>
+      <div id="filter-group">
+         <select class="button filter" id="happiness-filter">
+         <option id="clear-filter">HAPPINESS FILTER: 🚫</option>
+         <option id="sad">HAPPINESS FILTER: 🤬</option>
+         <option id="medium-sad">HAPPINESS FILTER: ☹️</option>
+         <option id="medium-happy">HAPPINESS FILTER: 😐</option>
+         <option id="happy">HAPPINESS FILTER: 😀</option>
+         </select>
+         <input id="cacheirop-filter-input" placeholder="CacheIR Op Filter"></input>
+         <div>
+            <button id="apply-cacheir-filter" onclick="applyCacheIROpFilter()">Apply</button>
+            <button id="clear-cacheir-filter" onclick="clearCacheIROpFilter()">Clear</button>
+         </div>
+      </div>
       <br>
       <div id="status"></div>
       <br>
