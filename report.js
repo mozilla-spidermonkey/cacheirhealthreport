@@ -377,6 +377,7 @@ function createScriptTable() {
     scriptTbody.appendChild(row);
   }
 
+  document.getElementById("filter-group").style.visibility = "visible";
   document.getElementById("happiness-filter").style.display = "inline-block";
 }
 
@@ -411,6 +412,26 @@ function filterOpTableHappiness() {
   clearAllTables();
   createScriptTable();
 }
+
+function setHappinessFilter() {
+  let select = document.getElementById("happiness-filter");
+  if(select.selectedIndex == 0) {
+    happinessFilter = undefined;
+  } else if(select.selectedIndex == 1) {
+    happinessFilter = 0;
+  } else if(select.selectedIndex == 2) {
+    happinessFilter = 1;
+  } else if(select.selectedIndex == 3) {
+    happinessFilter = 2;
+  } else if(select.selectedIndex == 4) {
+    happinessFilter = 3;
+  }
+  filterOpTableHappiness();
+}
+
+document.getElementById("happiness-filter").addEventListener("change", function(e) {
+  setHappinessFilter();
+});
 
 document.getElementById("clear-filter").addEventListener("click", function() {
   if (happinessFilter != undefined) {
@@ -504,3 +525,144 @@ document.getElementById("clear").addEventListener("click", function() {
 
   document.getElementById("status").textContent = "Cleared.";
 });
+let CACHEIR_OP_FILTER = "*";
+
+function getCacheIROpFilterElement() {
+  return document.getElementById("cacheirop-filter-input");
+}
+
+function applyCacheIROpFilter() {
+  let filter = document.getElementById("cacheirop-filter-input").value;
+  if(filter == "") {
+    clearAllTables();
+    createScriptTable();
+  } else {
+    filterScriptTableOnCacheIROp(filter);
+  }
+}
+
+function clearCacheIROpFilter() {
+  clearAllTables();
+  createScriptTable();
+  getCacheIROpFilterElement().value = "";
+}
+
+function createScriptTableRowFiltered(script, scriptTbody, filter) {
+    let context = CONTEXT[script.spewContext];
+    let health = undefined;
+    if (context == "Shell") {
+      health = script.scriptHappiness;
+    } else {
+      // If spew context is not shell, then we only spew the CacheIR for 
+      // unhappy ICs.
+      health = 0;
+    }
+  
+    if (happinessFilter == health || happinessFilter == undefined) {
+      let row = document.createElement("tr");
+  
+      // Add script name to table.
+      addCellValue(row, script.location.filename);
+  
+      // Add line number to table.
+      addCellValue(row, script.location.line);
+  
+      // Add column number to table.
+      addCellValue(row, script.location.column);
+  
+      // Add final hit count to table.
+      addCellValue(row, undefined);
+  
+      // Add context to table.
+      addCellValue(row, context);
+  
+      // Add script health only when we have spewed the whole script from 
+      // the shell.
+      addCellValue(row, HAPPINESS[health]);
+  
+      row.onclick = function() {
+        let opTable = document.getElementById("op-table");
+        let opTbody = opTable.getElementsByTagName('tbody')[0];
+  
+        // Highlight selected script row.
+        highlightSelectedScript(scriptTbody, row);
+  
+        if (opTable.style.display === "") {
+          opTable.style.display = "inline-block";
+        } else {
+          // When selecting a new script we must clear all previously 
+          // created tables.
+          clearOpTable("inline-block");
+          clearStubTable("");
+          clearCacheIRTable("");
+          clearShapeInfoTable("");
+          clearStubFieldTable("");
+        }
+  
+        createOpTableFiltered(context, script, opTable, opTbody, filter);
+      };
+  
+  
+      scriptTbody.appendChild(row);
+    }
+  }
+  
+  function createOpTableFiltered(context, script, opTable, opTbody, filter) {
+    opTable.style.display = "inline-block";
+    if (context == "Shell") {
+      for (let entry of script.entries) {
+        if(entry.op == filter) {
+          createOpTableRow(entry, opTbody);
+        }
+      }
+    } else {
+      if(script.op == filter) {
+        createOpTableRow(script, opTbody);
+      }
+    }
+  
+    if (happinessFilter && opTbody.innerHTML == "") {
+      let row = document.createElement("tr");
+      addCellValue(row, "No stubs have happiness level specified by filter.");
+      opTbody.appendChild(row);
+    }
+  }
+  
+  function filterScriptTableOnCacheIROp(filter) {
+    clearAllTables();
+    let scriptTable = document.getElementById("script-table");
+    let scriptTbody = scriptTable.getElementsByTagName('tbody')[0];
+    scriptTable.style.display = "inline-block";
+  
+    for (let script of PARSED_JSON) {
+      if (script.channel != "RateMyCacheIR") {
+        document.getElementById("status").textContent = "Wrong JSON spew channel."
+      }
+      if(script.hasOwnProperty("op") && script.op == filter || script.hasOwnProperty("entries") && script.entries.map(e => e).filter(entry => entry.op == filter).length != 0) {
+          createScriptTableRowFiltered(script, scriptTbody, filter);
+      }
+    }
+    // hack - adding the final warm up count involves looking at various spew values. we just do brute force and go over everything again
+    // i'm not clear about what it looks for.
+    for(let script of PARSED_JSON) {
+      if(script.hasOwnProperty("finalWarmUpCount")) {
+        for (let row = 0; row < scriptTbody.rows.length; row++) {
+          let filename = scriptTbody.rows[row].cells[SCRIPT_NAME_COLUMN].textContent;
+          let lineno = scriptTbody.rows[row].cells[SCRIPT_LINE_COLUMN].innerHTML;
+          let column = scriptTbody.rows[row].cells[SCRIPT_COLUMN_COLUMN].innerHTML;
+          if (filename == script.filename && lineno == script.line && column == script.column) {
+            scriptTbody.rows[row].cells[SCRIPT_HIT_COUNT_COLUMN].innerHTML = parseFloat(script.finalWarmUpCount);
+          }
+        }
+      }
+    }
+  
+    if ((happinessFilter || CACHEIR_OP_FILTER != "*") && scriptTbody.innerHTML == "") {
+      let row = document.createElement("tr");
+      addCellValue(row, "No scripts have happiness level specified by filter.");
+      scriptTbody.appendChild(row);
+    }
+    
+    document.getElementById("filter-group").style.visibility = "visible";
+    document.getElementById("happiness-filter").style.display = "inherit";
+  }

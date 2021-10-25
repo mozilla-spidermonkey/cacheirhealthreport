@@ -99,10 +99,27 @@ tfoot tr:last-child td {
   display: block;
 }
 
+/*
 .filter {
   display: none;
   float: right;
 }
+*/
+
+#filter-group {
+  visibility: hidden;
+  display: flex;
+  float: right;
+  flex-direction: column;
+}
+
+#filter-group > * {
+  flex-basis: 1 1 0px;
+  padding: 3px;
+  width: max-content;
+  margin: 5px;
+}
+
 
 #status {
   color: #c9f0ff;
