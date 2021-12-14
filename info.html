@@ -18,14 +18,14 @@
       </h3>
       <p>
       <ol> 
-         <li><a href="https://firefox-source-docs.mozilla.org/js/build.html"> Build SpiderMonkey's JavaScript shell</a>.</li>
-         <li>Use environment variable: SPEW=CacheIRHealthReport.</li>
-         <li>The SPEW environment variable is not used in optimized browser builds, in order to enable this in optimized browser builds add the below to your mozconfig to support CacheIR Health Report:</li>
+         <li>Add the below line to your mozconfig to support CacheIR Health Report:</li>
          <div class="example"><code>ac_add_options --enable-jitspew</code></div>
+         <li><a href="https://firefox-source-docs.mozilla.org/js/build.html"> Build SpiderMonkey's JavaScript shell</a>.</li>
+         <li>Use environment variable: SPEW=CacheIRHealthReport. <div><b>note: The SPEW environment variable is not used in optimized browser builds, enabling jitspew allows generating a report in optimized builds.</b></div></li>
          <li>There are four ways to generate a CacheIR Health Report:</li>
          <ul> 
             <li>Build and run the browser with the two aforementioned evironment and mozconfig 
-            options. <b>note: for this option you must set security.sandbox.content.level to 1 in about:config</b></li>
+            options. <b><div>note: for this option you must set security.sandbox.content.level to 1 in about:config</b></div></li>
             <div class="example"><code>SPEW=CacheIRHealthReport ./mach run</code></div>
             <li>Running a JS program will produce a health report.</li>
             <div class="example"><code>SPEW=CacheIRHealthReport dist/bin/js jsprogram.js</code></div>
